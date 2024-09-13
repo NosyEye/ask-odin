@@ -19,7 +19,7 @@ const state = 'asla3w4oawn38d4yw8l3rw';
 
 export function requestTwitchAuth() {
     const baseUrl = 'https://id.twitch.tv/oauth2/authorize';
-    // const redirectUrl = 'http://localhost:5173';
+    // const redirectUrl = 'http://localhost:5173/';
     const redirectUrl = 'https://nosyeye.github.io/ask-odin/';
     const responseType = 'token';
     const scope = 'user:read:follows';
@@ -34,6 +34,7 @@ export function processTwitchAuth() {
     if (locationHash) {
         const token = extractToken(locationHash);
         access_token.set(token);
+        // goto('/');
         goto('/ask-odin/');
     }
 }

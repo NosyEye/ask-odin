@@ -53,7 +53,7 @@
 	}
 
 	.corner {
-		width: 3em;
+		width: 10em;
 		height: 3em;
 	}
 

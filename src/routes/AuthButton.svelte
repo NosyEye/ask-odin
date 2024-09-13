@@ -23,5 +23,15 @@ Log in with Twitch
 {/if}
 
 <style>
+	button {
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-nav);
+		color: #fff;
+		border: none;
+	}
 
+	button:hover {
+		background-color: var(--color-nav-hover);
+	}
 </style>
