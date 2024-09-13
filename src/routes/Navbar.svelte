@@ -55,6 +55,7 @@
 	.corner {
 		width: 10em;
 		height: 3em;
+/* 		font-size:0.8rem; */
 	}
 
 

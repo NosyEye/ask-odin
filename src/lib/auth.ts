@@ -1,8 +1,15 @@
 import { writable } from 'svelte/store';
 import { goto } from '$app/navigation';
+import { get } from 'svelte/store';
+
+interface TwitchUser {
+    id: string;
+    display_name: string;
+}
 
 export const access_token = writable('');
 export const logged_in = writable(false);
+export const current_user = writable<TwitchUser>();
 
 access_token.subscribe((token) => {
     if (token) {
@@ -36,6 +43,8 @@ export function processTwitchAuth() {
         access_token.set(token);
         // goto('/');
         goto('/ask-odin/');
+
+        getUser();
     }
 }
 
@@ -49,3 +58,25 @@ function extractToken(hash) {
 export function logout() {
    access_token.set('');
 }
+
+async function getUser() {
+    const token = get(access_token);
+    const headers = new Headers();
+    headers.set('Authorization', `Bearer ${token}`);
+    headers.set('Client-Id', CLIENT_ID);
+    const options = {
+        headers: headers
+    };
+
+    const response = await fetch('https://api.twitch.tv/helix/users', options);
+    const responseObject = await response.json();
+
+    if (responseObject.data && responseObject.data.length > 0) {
+        const user: TwitchUser = {
+            id: responseObject.data[0].id,
+            display_name: responseObject.data[0].display_name
+        };
+        current_user.set(user);
+    }
+}
+

@@ -1,22 +1,22 @@
-import { access_token, CLIENT_ID } from '$lib/auth';
+import { access_token, current_user, CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 
-async function getUserId() {
-    const token = get(access_token);
-    const headers = new Headers();
-    headers.set('Authorization', `Bearer ${token}`);
-    headers.set('Client-Id', CLIENT_ID);
-    const options = {
-        headers: headers
-    };
-
-    const response = await fetch('https://api.twitch.tv/helix/users', options);
-    const responseObject = await response.json();
-
-    if (responseObject.data && responseObject.data.length > 0) {
-        return responseObject.data[0].id;
-    }
-}
+// async function getUserId() {
+//     const token = get(access_token);
+//     const headers = new Headers();
+//     headers.set('Authorization', `Bearer ${token}`);
+//     headers.set('Client-Id', CLIENT_ID);
+//     const options = {
+//         headers: headers
+//     };
+//
+//     const response = await fetch('https://api.twitch.tv/helix/users', options);
+//     const responseObject = await response.json();
+//
+//     if (responseObject.data && responseObject.data.length > 0) {
+//         return responseObject.data[0].id;
+//     }
+// }
 
 async function getFollowedStreams() {
     const token = get(access_token);
@@ -27,9 +27,9 @@ async function getFollowedStreams() {
         headers: headers
     };
 
-    const userId = await getUserId();
+    const user = get(current_user);
 
-    const response = await fetch(`https://api.twitch.tv/helix/streams/followed?user_id=${userId}`, options);
+    const response = await fetch(`https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`, options);
     const responseObject = await response.json();
     return responseObject.data;
 }
