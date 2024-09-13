@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/0.D0MEnWpD.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.DoUOLhUh.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.9gY0GcTA.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.DySCpHg9.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.DIuM07CZ.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.BBQQj71C.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.CN8n2djZ.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.7Jv3tkXu.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/stores.C9kAkSEO.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/auth.CaRzolIc.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.B6HmxFpS.js"><title>Ask Odin</title><!-- HEAD_svelte-1xsnyjj_START --><meta name="description" content="Svelte demo app"><!-- HEAD_svelte-1xsnyjj_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <div class="app svelte-8o1gnw"> <main class="svelte-8o1gnw"> <section class="svelte-19xx0bt"><h1 class="svelte-19xx0bt" data-svelte-h="svelte-1s75mn8">Ask Odin</h1> <button data-svelte-h="svelte-8z2gmb">get followed streams</button> <pre></pre>  </section> <section class="svelte-19xx0bt"><label>Max minutes streamed<input type="range" min="0" max="300" step="20" value="160"></label> 160 <label>Min viewers<input type="range" min="0" max="300" step="10" value="0"></label> 0 <label>Max viewers<input type="range" min="0" max="3000" step="100" value="3000"></label> 3000 <label>Minutes to raid<input type="range" min="0" max="60" step="5" value="30"></label> 30 </section></main> <footer class="svelte-8o1gnw" data-svelte-h="svelte-1hva282"></footer> <div class="navbar svelte-11ccqm2"><div class="corner svelte-11ccqm2"> </div> <nav class="svelte-11ccqm2"> <ul class="svelte-11ccqm2"><li class="svelte-11ccqm2"><a href="./" class="svelte-11ccqm2" data-svelte-h="svelte-1beeprt">Ask Odin</a></li> <li class="svelte-11ccqm2"><a href="./about" class="svelte-11ccqm2" data-svelte-h="svelte-2hnrj4">About</a></li></ul> </nav> <div class="corner svelte-11ccqm2">  <button data-svelte-h="svelte-1bgh08o">Log in with Twitch</button></div> </div> </div> 
+			
+			<script>
+				{
+					__sveltekit_14stfci = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/ask-odin"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.9gY0GcTA.js"),
+						import("./_app/immutable/entry/app.BBQQj71C.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
