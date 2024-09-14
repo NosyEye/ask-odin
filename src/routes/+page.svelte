@@ -34,11 +34,15 @@
 	function toDiscordFormat() {
 		let discordText = '```\n';
 		const selectedStreams = streams.filter(s => s.selected);
-		for (let stream of selectedStreams) {
-			discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')\n';
+		for (const [index,stream] of selectedStreams.entries()) {
+			discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')';
+
+			if (index < selectedStreams.length - 1) {
+				discordText += '\n\n';
+			}
 		}
 
-		discordText += '```'
+		discordText += '\n```'
 
 		return discordText;
 	}
