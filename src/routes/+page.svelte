@@ -70,7 +70,7 @@
 
 <svelte:head>
 	<title>Ask Odin</title>
-	<meta name="description" content="Svelte demo app" />
+	<meta name="description" content="Tool for finding raid targets on Twitch" />
 </svelte:head>
 
 <section>
