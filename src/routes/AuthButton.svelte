@@ -29,6 +29,7 @@ Log in with Twitch
 		background-color: var(--color-nav);
 		color: #fff;
 		border: none;
+		cursor: pointer;
 	}
 
 	button:hover {

@@ -45,6 +45,7 @@
 
 <style>
 	.topbar {
+		z-index: 10000;
 		position: fixed;
 		top: 0;
 		width: 100%;
@@ -56,7 +57,7 @@
 
 	.corner {
 		position: relative;
-		width: 10em;
+		width: 8em;
 		height: 3em;
 	}
 
@@ -64,12 +65,12 @@
 		position: relative;
 		width: 3em;
 		height: 3em;
-		padding-right: 7em;
+		padding-right: 5em;
 	}
 
 	.nav-icon {
 		position: relative;
-		top: 0.5rem;
+		top: 0.6rem;
 	}
 
 	.corner a {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { logged_in, current_user } from '$lib/auth';
+	import { logged_in, current_user, logout } from '$lib/auth';
     import { get } from 'svelte/store';
 
 	let loggedIn = get(logged_in);
@@ -12,14 +12,45 @@
         currentUser = user;
 	});
 
+	let profileDropdownOpen: boolean = false;
+
+	function toggleProfileDropdown() {
+        profileDropdownOpen = !profileDropdownOpen;
+	}
+
+	function handleClickOutside() {
+        profileDropdownOpen = false;
+	}
+
+	function clickOutside(node) {
+        const handleClick = event => {
+            if (node && !node.contains(event.target) && !event.defaultPrevented) {
+                node.dispatchEvent(new CustomEvent('click_outside', node));
+            }
+        }
+
+        document.addEventListener('click', handleClick, true);
+
+        return {
+            destroy() {
+                document.removeEventListener('click', handleClick, true);
+            }
+        };
+    }
+
 </script>
 
 {#if loggedIn && currentUser}
-<div class="user">
-<span>{currentUser.display_name}</span>
-</div>
+<!-- <div class="user"> -->
+<button on:click={toggleProfileDropdown}>{currentUser.display_name}</button>
+<!-- </div> -->
 {/if}
 
+{#if profileDropdownOpen}
+<div class="dropdown" use:clickOutside on:click_outside={handleClickOutside}>
+  <button on:click={logout}>Logout</button>
+</div>
+{/if}
 
 
 <style>
@@ -33,6 +64,10 @@
 
     }
 
+    .dropdown button {
+        line-height: 2rem;
+    }
+
 /*    .status {
     display: inline-block;
         vertical-align: middle;
@@ -42,4 +77,16 @@
         vertical-align: middle;
         line-height: 1.0em;
     }
+	button {
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-nav);
+		color: #fff;
+		border: none;
+		cursor: pointer;
+	}
+
+	button:hover {
+		background-color: var(--color-nav-hover);
+	}
 </style>
