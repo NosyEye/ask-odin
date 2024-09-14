@@ -22,7 +22,7 @@
 <div class="topbar">
 	<div class="left-corner">
 		<nav>
-		    {#if $page.url.pathname === '/'}
+		    {#if $page.url.pathname === `${base}/`}
 			<div class="nav-icon"><a href="{base}/about"><HelpCircleIcon/></a></div>
 			{:else}
 			<div class="nav-icon"><a href="{base}/"><HomeIcon/></a></div>
