@@ -4,4 +4,5 @@ export interface LiveStream {
     viewers: number;
     title: string;
     link: string;
+    selected: boolean;
 }

@@ -31,6 +31,35 @@
 		}
 	}
 
+	function toDiscordFormat() {
+		let discordText = '';
+		const selectedStreams = streams.filter(s => s.selected);
+		for (let stream of selectedStreams) {
+			discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')\n';
+		}
+
+		return discordText;
+	}
+
+	function copySelectedStreamsForDiscord(){
+		const textToCopy = toDiscordFormat();
+		navigator.clipboard.writeText(textToCopy);
+	}
+
+	function handleSelectStream(selectEvent) {
+
+	}
+
+	function handleStreamDelete(deleteEvent) {
+		const streamToDelete = deleteEvent.detail.name;
+
+		const indexOfStream = streams.findIndex(s => s.name === streamToDelete);
+
+		const toBeSpliced = streams;
+		toBeSpliced.splice(indexOfStream, 1);
+		streams = toBeSpliced;
+	}
+
 </script>
 
 <svelte:head>
@@ -44,11 +73,13 @@
 		Ask Odin
 	</h1>
 
-		<button on:click={getRaidTargets}>get followed streams</button>
+		<button on:click={getRaidTargets}>Get followed streams</button>
 		<pre>{streamTextBlock}</pre>
-<!--		{#each streams as stream}
-			<LiveStreamItem bind:stream={stream}/>
-		{/each}-->
+
+		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button>
+		{#each streams as stream}
+			<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
+		{/each}
 <!--	<h2>
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>-->

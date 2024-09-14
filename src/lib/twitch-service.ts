@@ -79,7 +79,8 @@ export async function getStreams(category: string, maxDurationMinutes: number, m
            runningTime: durationToString(duration + minutesToRaid * 60 * 1000),
            viewers: stream.viewer_count,
            title: stream.title,
-           link: `https://twitch.tv/${stream.user_login}`
+           link: `https://twitch.tv/${stream.user_login}`,
+           selected: false
         });
     }
 
