@@ -65,7 +65,7 @@ export async function getStreams(category: string, maxDurationMinutes: number, m
         }
 
         const streamStartTime = new Date(stream.started_at);
-        const duration = now - streamStartTime;
+        const duration = now - streamStartTime + minutesToRaid * 60 * 1000;
         if (duration > maxDurationMs) {
             continue;
         }
@@ -76,7 +76,7 @@ export async function getStreams(category: string, maxDurationMinutes: number, m
 
         liveStreams.push({
            name: stream.user_name,
-           runningTime: durationToString(duration + minutesToRaid * 60 * 1000),
+           runningTime: durationToString(duration),
            viewers: stream.viewer_count,
            title: stream.title,
            link: `https://twitch.tv/${stream.user_login}`,
