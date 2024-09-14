@@ -1,5 +1,6 @@
 import { access_token, current_user, CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
+import type { LiveStream } from '$lib/types/livestream';
 
 // async function getUserId() {
 //     const token = get(access_token);
@@ -18,6 +19,8 @@ import { get } from 'svelte/store';
 //     }
 // }
 
+// export const live_streams = writable<LiveStream[]>();
+
 async function getFollowedStreams() {
     const token = get(access_token);
     const headers = new Headers();
@@ -34,12 +37,6 @@ async function getFollowedStreams() {
     return responseObject.data;
 }
 
-interface LiveStream {
-    name: string;
-    runningTime: string;
-    viewers: number;
-    title: string;
-}
 
 function durationToString(durationMs: number) {
     const totalSeconds = Math.floor(durationMs / 1000);
@@ -81,7 +78,8 @@ export async function getStreams(category: string, maxDurationMinutes: number, m
            name: stream.user_name,
            runningTime: durationToString(duration + minutesToRaid * 60 * 1000),
            viewers: stream.viewer_count,
-           title: stream.title
+           title: stream.title,
+           link: `https://twitch.tv/${stream.user_login}`
         });
     }
 

@@ -6,6 +6,8 @@
 	import { onMount } from 'svelte';
 	import { getStreams } from '$lib/twitch-service';
 
+	import LiveStreamItem from './LiveStreamItem.svelte';
+
 	onMount(() => {
 		processTwitchAuth();
 	});
@@ -18,8 +20,10 @@
 	let maxViewers = 3000;
 	let minutesToRaid = 30;
 
+	let streams = [];
+
 	async function getRaidTargets() {
-		const streams = await getStreams('Music', maxMinutes, minViewers, maxViewers, minutesToRaid);
+		streams = await getStreams('Music', maxMinutes, minViewers, maxViewers, minutesToRaid);
 		streamTextBlock = '';
 		for (let stream of streams) {
 			streamTextBlock += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')\n';
@@ -42,6 +46,9 @@
 
 		<button on:click={getRaidTargets}>get followed streams</button>
 		<pre>{streamTextBlock}</pre>
+<!--		{#each streams as stream}
+			<LiveStreamItem bind:stream={stream}/>
+		{/each}-->
 <!--	<h2>
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>-->

@@ -1,11 +1,10 @@
 import { writable } from 'svelte/store';
 import { goto } from '$app/navigation';
 import { get } from 'svelte/store';
+import type { TwitchUser } from '$lib/types/twitchuser';
 
-interface TwitchUser {
-    id: string;
-    display_name: string;
-}
+import { dev } from '$app/environment';
+
 
 export const access_token = writable('');
 export const logged_in = writable(false);
@@ -26,8 +25,15 @@ const state = 'asla3w4oawn38d4yw8l3rw';
 
 export function requestTwitchAuth() {
     const baseUrl = 'https://id.twitch.tv/oauth2/authorize';
+    let redirectUrl = '';
+    if (dev) {
+        redirectUrl = 'http://localhost:5173/';
+    }
+    else {
+        redirectUrl = 'https://nosyeye.github.io/ask-odin/';
+    }
     // const redirectUrl = 'http://localhost:5173/';
-    const redirectUrl = 'https://nosyeye.github.io/ask-odin/';
+    // const redirectUrl = 'https://nosyeye.github.io/ask-odin/';
     const responseType = 'token';
     const scope = 'user:read:follows';
 
@@ -42,7 +48,14 @@ export function processTwitchAuth() {
         const token = extractToken(locationHash);
         access_token.set(token);
         // goto('/');
-        goto('/ask-odin/');
+        // goto('/ask-odin/');
+
+        if (dev) {
+            goto('/');
+        }
+        else {
+            goto('/ask-odin/');
+        }
 
         getUser();
     }
