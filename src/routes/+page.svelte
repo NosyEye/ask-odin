@@ -32,11 +32,13 @@
 	}
 
 	function toDiscordFormat() {
-		let discordText = '';
+		let discordText = '```\n';
 		const selectedStreams = streams.filter(s => s.selected);
 		for (let stream of selectedStreams) {
 			discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')\n';
 		}
+
+		discordText += '```'
 
 		return discordText;
 	}
