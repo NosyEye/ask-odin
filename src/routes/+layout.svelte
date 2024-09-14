@@ -1,13 +1,14 @@
 <script>
 	// import Header from './Header.svelte';
 	import '../app.css';
+	import Topbar from './Topbar.svelte';
 	import Navbar from './Navbar.svelte';
 
 </script>
 
 <div class="app">
 <!-- 	<Header /> -->
-
+	<Topbar/>
 	<main>
 		<slot />
 	</main>

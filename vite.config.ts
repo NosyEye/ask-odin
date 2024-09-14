@@ -12,12 +12,12 @@ export default defineConfig(({command, mode, isSSrBuild, isPreview}) => {
 	if (command === 'serve') {
 		return {
 			plugins: [sveltekit()],
-							base: "/"
+			base: "/"
 		};
 	} else {
 		return {
 			plugins: [sveltekit()],
-							base: "/ask-odin/"
+			base: "/ask-odin/"
 		};
 	}
 });

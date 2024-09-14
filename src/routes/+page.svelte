@@ -74,10 +74,10 @@
 </svelte:head>
 
 <section>
-	<h1>
+<!--	<h1>
 
 		Ask Odin
-	</h1>
+	</h1>-->
 
 		<button on:click={getRaidTargets}>Get followed streams</button>
 		<pre>{streamTextBlock}</pre>
