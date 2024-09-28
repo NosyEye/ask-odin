@@ -24,6 +24,9 @@ import type { LiveStream } from '$lib/types/livestream';
 
 
 export const streams_store = writable<LiveStream[]>([]);
+
+export const show_filters = writable(false);
+
 export const max_minutes = writable(160);
 export const min_viewers = writable(0);
 export const max_viewers = writable(3000);

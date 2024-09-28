@@ -138,7 +138,7 @@
 		height: 100%;
 		align-items: center;
 		padding: 0 0.5rem;
-/* 		color: #fff; */
+ 		color: #fff;
 		font-weight: 700;
 		font-size: 0.8rem;
 		text-transform: uppercase;
@@ -154,5 +154,10 @@
 	.title {
 		height: 3em;
         line-height: 3.0em;
+	}
+
+	.title a {
+		text-decoration: none;
+		color: #fff;
 	}
 </style>

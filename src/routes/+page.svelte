@@ -2,16 +2,18 @@
 	// import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
-	import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
-	import { onMount } from 'svelte';
+	// import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
+	// import { onMount } from 'svelte';
 	import { getStreams, streams_store } from '$lib/twitch-service';
 	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
 
-	onMount(() => {
-		processTwitchAuth();
-	});
+	import { logged_in } from '$lib/auth';
+
+	// onMount(() => {
+	// 	processTwitchAuth();
+	// });
 
 	// let streams = get(streams_store);
 	// streams_store.subscribe((_streams) => {
@@ -81,7 +83,7 @@
 </svelte:head>
 
 <section>
-		<button on:click={getRaidTargets}>Get followed streams</button>
+<!-- 		<button on:click={getRaidTargets}>Get followed streams</button> -->
 <!-- 		<pre>{streamTextBlock}</pre> -->
 
 <!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
@@ -89,8 +91,18 @@
 			<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
 		{/each}
 
+	    {#if $logged_in && $streams_store.length === 0}
+			Use the bottom bar to get a list of live followed channels. <br>
+			Narrow the list with filters.<br>
+			Copy selected in markdown (Discord) code block.
+	    {/if}
+
+		{#if !$logged_in}
+			Log in to use
+		{/if}
+
 </section>
-<section>
+<!--<section>
 		<label>Max minutes streamed<input type="range" min="0" max="300" step="20" bind:value={maxMinutes}></label>
 		{maxMinutes}
 		<label>Min viewers<input type="range" min="0" max="300" step="10" bind:value={minViewers}></label>
@@ -99,7 +111,7 @@
 		{maxViewers}
 		<label>Minutes to raid<input type="range" min="0" max="60" step="5" bind:value={minutesToRaid}></label>
 		{minutesToRaid}
-</section>
+</section>-->
 
 <style>
 	section {

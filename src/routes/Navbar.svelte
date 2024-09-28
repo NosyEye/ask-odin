@@ -6,26 +6,31 @@
 
 	import AuthButton from './AuthButton.svelte';
 	import Profile from './Profile.svelte';
-	import { getStreams, copySelectedStreamsForDiscord } from '$lib/twitch-service';
+	import { getStreams, copySelectedStreamsForDiscord, show_filters } from '$lib/twitch-service';
 
 	import { SlidersIcon, RefreshCcwIcon, CopyIcon } from 'svelte-feather-icons';
 
+	import { logged_in } from '$lib/auth';
+
 	async function getTheStreams(){
-	await getStreams('Music');
+		await getStreams('Music');
+		show_filters.set(false);
 	}
 
 </script>
 
 <div class="navbar">
+	{#if $logged_in}
 	<div class="actions">
 		{#if $page.url.pathname === `${base}/`}
-		<button><div class="action-icon"><SlidersIcon/></div></button>
+		<button on:click={() => $show_filters = !$show_filters}><div class="action-icon"><SlidersIcon/></div></button>
 
 		<button on:click={getTheStreams}><div class="action-icon"><RefreshCcwIcon/></div></button>
 
 		<button on:click={copySelectedStreamsForDiscord}><div class="action-icon"><CopyIcon/></div></button>
 		{/if}
 	</div>
+	{/if}
 </div>
 
 <style>

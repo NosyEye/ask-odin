@@ -4,6 +4,12 @@
 	import Topbar from './Topbar.svelte';
 	import Navbar from './Navbar.svelte';
 	import Filters from './Filters.svelte';
+	import { onMount } from 'svelte';
+	import { processTwitchAuth} from '$lib/auth';
+	onMount(() => {
+		processTwitchAuth();
+	});
+
 
 </script>
 
@@ -15,7 +21,7 @@
 	</main>
 
 	<footer>
-<!-- 		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p> -->
+
 	</footer>
 
 	<Filters/>
@@ -38,7 +44,7 @@
 		max-width: 64rem;
 		margin: 0 auto;
 		box-sizing: border-box;
-		padding: 4rem;
+/* 		padding: 4rem; */
 	}
 
 	footer {
