@@ -6,30 +6,20 @@
 
 	import AuthButton from './AuthButton.svelte';
 	import Profile from './Profile.svelte';
+
+	import { SlidersIcon, RefreshCcwIcon, CopyIcon } from 'svelte-feather-icons';
 </script>
 
 <div class="navbar">
-	<div class="corner">
-<!--<Profile/>-->
+	<div class="actions">
+		{#if $page.url.pathname === `${base}/`}
+		<button><div class="action-icon"><SlidersIcon/></div></button>
+
+		<button><div class="action-icon"><RefreshCcwIcon/></div></button>
+
+		<button><div class="action-icon"><CopyIcon/></div></button>
+		{/if}
 	</div>
-
-<!--	<nav>
-
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="{base}/">Ask Odin</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="{base}/about">About</a>
-			</li>
-		</ul>
-
-	</nav>
-
-	<div class="corner">
-
-		<AuthButton/>
-	</div>-->
 </div>
 
 <style>
@@ -40,92 +30,48 @@
 		background-color: #000;
 		color: #fff;
 		display: flex;
+		justify-content: center;
+		height: 3em;
+	}
+
+	.action-icon {
+		position: relative;
+		top: 0.6rem;
+	}
+
+	.actions {
+		display: flex;
 		justify-content: space-between;
 	}
 
-	.corner {
-		width: 10em;
-		height: 3em;
-/* 		font-size:0.8rem; */
+	@media (max-width:480px) {
+		.actions {
+			width: 60%;
+		}
 	}
 
-
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
+	@media (min-width:481px) {
+		.actions {
+			width: 30%;
+		}
 	}
 
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
-	}
-
-	nav {
+	button {
+		border: none;
+		background: inherit;
+		color: inherit;
 		display: flex;
 		justify-content: center;
-/* 		--background: rgba(255, 255, 255, 0.7); */
-	}
-
-	svg {
-		width: 2em;
 		height: 3em;
-		display: block;
+		width: 3em;
 	}
 
-	path {
-		fill: var(--background);
+	button:hover {
+		background: #111;
 	}
 
-	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: 3em;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		background: var(--background);
-		background-size: contain;
+	button:active {
+		background: #111;
 	}
 
-	li {
-		position: relative;
-		height: 100%;
-	}
-
-	li[aria-current='page']::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--color-theme-1);
-	}
-
-	nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 0.5rem;
-/* 		color: #fff; */
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.2s linear;
-	}
-
-	a:hover {
-/* 		color: var(--color-theme-1); */
-	}
 </style>
