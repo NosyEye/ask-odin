@@ -92,9 +92,10 @@
 		{/each}
 
 	    {#if $logged_in && $streams_store.length === 0}
-			Use the tool bar to get a list of live followed channels. <br>
-			Narrow the list with filters.<br>
-			Copy selected in markdown (Discord) code block.
+			Controls are in the the tool bar at the bottom.<br>
+			Specify filters for channels to get.<br>
+			Get a list of followed channels.<br>
+			Copy selected channels in markdown (Discord) code block.
 	    {/if}
 
 		{#if !$logged_in}
