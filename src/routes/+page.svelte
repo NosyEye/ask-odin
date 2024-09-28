@@ -4,7 +4,8 @@
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
 	import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
 	import { onMount } from 'svelte';
-	import { getStreams } from '$lib/twitch-service';
+	import { getStreams, streams_store } from '$lib/twitch-service';
+	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
 
@@ -12,6 +13,11 @@
 		processTwitchAuth();
 	});
 
+	// let streams = get(streams_store);
+	// streams_store.subscribe((_streams) => {
+	// console.log(_streams)
+ //        streams = _streams;
+	// });
 
 	let streamTextBlock  = '';
 
@@ -20,10 +26,11 @@
 	let maxViewers = 3000;
 	let minutesToRaid = 30;
 
-	let streams = [];
+	// let streams = [];
 
 	async function getRaidTargets() {
-		streams = await getStreams('Music', maxMinutes, minViewers, maxViewers, minutesToRaid);
+		//streams = await getStreams('Music', maxMinutes, minViewers, maxViewers, minutesToRaid);
+		await getStreams('Music', maxMinutes, minViewers, maxViewers, minutesToRaid);
 		streamTextBlock = '';
 		for (let stream of streams) {
 			streamTextBlock += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')\n';
@@ -59,11 +66,11 @@
 	function handleStreamDelete(deleteEvent) {
 		const streamToDelete = deleteEvent.detail.name;
 
-		const indexOfStream = streams.findIndex(s => s.name === streamToDelete);
+		const indexOfStream = $streams_store.findIndex(s => s.name === streamToDelete);
 
-		const toBeSpliced = streams;
+		const toBeSpliced = $streams_store;
 		toBeSpliced.splice(indexOfStream, 1);
-		streams = toBeSpliced;
+		$streams_store = toBeSpliced;
 	}
 
 </script>
@@ -74,23 +81,14 @@
 </svelte:head>
 
 <section>
-<!--	<h1>
-
-		Ask Odin
-	</h1>-->
-
 		<button on:click={getRaidTargets}>Get followed streams</button>
-		<pre>{streamTextBlock}</pre>
+<!-- 		<pre>{streamTextBlock}</pre> -->
 
-		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button>
-		{#each streams as stream}
+<!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
+		{#each $streams_store as stream}
 			<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
 		{/each}
-<!--	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>-->
 
-<!-- 	<Counter /> -->
 </section>
 <section>
 		<label>Max minutes streamed<input type="range" min="0" max="300" step="20" bind:value={maxMinutes}></label>

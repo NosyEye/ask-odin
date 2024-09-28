@@ -1,3 +1,4 @@
+import { writable } from 'svelte/store';
 import { access_token, current_user, CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
@@ -20,6 +21,9 @@ import type { LiveStream } from '$lib/types/livestream';
 // }
 
 // export const live_streams = writable<LiveStream[]>();
+
+
+export const streams_store = writable<LiveStream[]>([]);
 
 async function getFollowedStreams() {
     const token = get(access_token);
@@ -84,5 +88,27 @@ export async function getStreams(category: string, maxDurationMinutes: number, m
         });
     }
 
-    return liveStreams;
+    streams_store.set(liveStreams);
+}
+
+function toDiscordFormat() {
+    let discordText = '```\n';
+    const streams = get(streams_store);
+    const selectedStreams = streams.filter(s => s.selected);
+    for (const [index,stream] of selectedStreams.entries()) {
+        discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')';
+
+        if (index < selectedStreams.length - 1) {
+            discordText += '\n\n';
+        }
+    }
+
+    discordText += '\n```'
+
+    return discordText;
+}
+
+export function copySelectedStreamsForDiscord() {
+    const textToCopy = toDiscordFormat();
+    navigator.clipboard.writeText(textToCopy);
 }

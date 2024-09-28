@@ -18,13 +18,15 @@
         profileDropdownOpen = !profileDropdownOpen;
 	}
 
+	let profileButton;
+
 	function handleClickOutside() {
         profileDropdownOpen = false;
 	}
 
 	function clickOutside(node) {
         const handleClick = event => {
-            if (node && !node.contains(event.target) && !event.defaultPrevented) {
+            if (node && !node.contains(event.target) && event.target != profileButton && !event.defaultPrevented) {
                 node.dispatchEvent(new CustomEvent('click_outside', node));
             }
         }
@@ -41,16 +43,16 @@
 </script>
 
 {#if loggedIn && currentUser}
-<!-- <div class="user"> -->
-<button on:click={toggleProfileDropdown}>{currentUser.display_name}</button>
-<!-- </div> -->
+<button on:click={toggleProfileDropdown} bind:this={profileButton}>{currentUser.display_name}</button>
 {/if}
+
 
 {#if profileDropdownOpen}
 <div class="dropdown" use:clickOutside on:click_outside={handleClickOutside}>
   <button on:click={logout}>Logout</button>
 </div>
 {/if}
+
 
 
 <style>

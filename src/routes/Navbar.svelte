@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import logo from '$lib/images/svelte-logo.svg';
@@ -6,8 +6,14 @@
 
 	import AuthButton from './AuthButton.svelte';
 	import Profile from './Profile.svelte';
+	import { getStreams, copySelectedStreamsForDiscord } from '$lib/twitch-service';
 
 	import { SlidersIcon, RefreshCcwIcon, CopyIcon } from 'svelte-feather-icons';
+
+	async function getTheStreams(){
+	await getStreams('Music', 160, 0, 3000, 30);
+	}
+
 </script>
 
 <div class="navbar">
@@ -15,9 +21,9 @@
 		{#if $page.url.pathname === `${base}/`}
 		<button><div class="action-icon"><SlidersIcon/></div></button>
 
-		<button><div class="action-icon"><RefreshCcwIcon/></div></button>
+		<button on:click={getTheStreams}><div class="action-icon"><RefreshCcwIcon/></div></button>
 
-		<button><div class="action-icon"><CopyIcon/></div></button>
+		<button on:click={copySelectedStreamsForDiscord}><div class="action-icon"><CopyIcon/></div></button>
 		{/if}
 	</div>
 </div>
@@ -64,14 +70,15 @@
 		justify-content: center;
 		height: 3em;
 		width: 3em;
+		cursor: pointer;
 	}
 
 	button:hover {
-		background: #111;
+		background: var(--color-nav-hover);
 	}
 
 	button:active {
-		background: #111;
+		background: var(--color-nav-hover);
 	}
 
 </style>
