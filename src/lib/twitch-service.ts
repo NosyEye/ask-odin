@@ -24,6 +24,10 @@ import type { LiveStream } from '$lib/types/livestream';
 
 
 export const streams_store = writable<LiveStream[]>([]);
+export const max_minutes = writable(160);
+export const min_viewers = writable(0);
+export const max_viewers = writable(3000);
+export const minutes_to_raid = writable(30);
 
 async function getFollowedStreams() {
     const token = get(access_token);
@@ -55,7 +59,13 @@ function durationToString(durationMs: number) {
     return hours.toString() + ':' + minutesString;
 }
 
-export async function getStreams(category: string, maxDurationMinutes: number, minViewers: number, maxViewers: number, minutesToRaid: number) {
+// export async function getStreams(category: string, maxDurationMinutes: number, minViewers: number, maxViewers: number, minutesToRaid: number) {
+export async function getStreams(category: string) {
+    const maxDurationMinutes = get(max_minutes);
+    const minViewers = get(min_viewers);
+    const maxViewers = get(max_viewers);
+    const minutesToRaid = get(minutes_to_raid);
+
     const liveFollowedStreams = await getFollowedStreams();
 
     let liveStreams: LiveStream[] = [];

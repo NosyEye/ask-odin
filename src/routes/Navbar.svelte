@@ -11,7 +11,7 @@
 	import { SlidersIcon, RefreshCcwIcon, CopyIcon } from 'svelte-feather-icons';
 
 	async function getTheStreams(){
-	await getStreams('Music', 160, 0, 3000, 30);
+	await getStreams('Music');
 	}
 
 </script>

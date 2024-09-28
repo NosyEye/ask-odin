@@ -3,6 +3,7 @@
 	import '../app.css';
 	import Topbar from './Topbar.svelte';
 	import Navbar from './Navbar.svelte';
+	import Filters from './Filters.svelte';
 
 </script>
 
@@ -16,6 +17,8 @@
 	<footer>
 <!-- 		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p> -->
 	</footer>
+
+	<Filters/>
 	<Navbar/>
 </div>
 
