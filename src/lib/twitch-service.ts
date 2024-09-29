@@ -3,6 +3,8 @@ import { access_token, current_user, CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
+import { channelsStore } from '$lib/stores/channelsStore';
+
 // async function getUserId() {
 //     const token = get(access_token);
 //     const headers = new Headers();
@@ -23,7 +25,7 @@ import type { LiveStream } from '$lib/types/livestream';
 // export const live_streams = writable<LiveStream[]>();
 
 
-export const streams_store = writable<LiveStream[]>([]);
+// export const streams_store = writable<LiveStream[]>([]);
 
 export const show_filters = writable(false);
 
@@ -101,12 +103,12 @@ export async function getStreams(category: string) {
         });
     }
 
-    streams_store.set(liveStreams);
+    channelsStore.set(liveStreams);
 }
 
 function toDiscordFormat() {
     let discordText = '```\n';
-    const streams = get(streams_store);
+    const streams = get(channelsStore);
     const selectedStreams = streams.filter(s => s.selected);
     for (const [index,stream] of selectedStreams.entries()) {
         discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')';
