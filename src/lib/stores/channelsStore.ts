@@ -1,9 +1,9 @@
 import { writable } from 'svelte/store';
-import { getStorageItem, setStorageItem } from '$lib/stores/storage';
+import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/storage';
 
-const storageName = 'channelsStore';
+const channelsStorageName = 'channelsStore';
 
-const storedValue = getStorageItem(storageName);
+const storedValue = getStorageItem(channelsStorageName);
 let actualValue = [];
 try {
     const parsedValue = JSON.parse(storedValue);
@@ -18,5 +18,34 @@ catch (error) {
 export const channelsStore = writable<LiveStream[]>(actualValue);
 
 channelsStore.subscribe((channels) => {
-   setStorageItem(storageName, JSON.stringify(channels));
+   setStorageItem(channelsStorageName, JSON.stringify(channels));
+});
+
+// Timestamp
+const timestampStorageName = 'channelsTimestampStore';
+
+const storedTimestamp = getStorageItem(timestampStorageName);
+
+let actualTimestampValue = new Date();
+try {
+    console.log(storedTimestamp)
+    const parsedValue = Date.parse(storedTimestamp);
+    console.log(parsedValue)
+    if (parsedValue) {
+        actualTimestampValue = new Date(parsedValue);
+    }
+}
+catch (error) {
+    console.error(error);
+}
+
+export const channelsTimestampStore = writable<Date>(actualTimestampValue);
+
+channelsTimestampStore.subscribe((timestamp: Date) => {
+    if (timestamp instanceof Date) {
+        setStorageItem(timestampStorageName, timestamp.toISOString());
+    }
+    else {
+        removeStorageItem(timestampStorageName);
+    }
 });

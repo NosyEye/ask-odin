@@ -13,3 +13,9 @@ export function setStorageItem(name: string, value: any): void {
     }
 }
 
+export function removeStorageItem(name: string): void {
+    if (browser) {
+        localStorage.removeItem(name, value);
+    }
+}
+

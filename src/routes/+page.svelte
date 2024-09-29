@@ -5,7 +5,7 @@
 	// import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
 	// import { onMount } from 'svelte';
 	import { getStreams } from '$lib/twitch-service';
-	import { channelsStore } from '$lib/stores/channelsStore';
+	import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
 	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
@@ -88,9 +88,14 @@
 <!-- 		<pre>{streamTextBlock}</pre> -->
 
 <!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
-		{#each $channelsStore as stream}
-			<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
-		{/each}
+		{#if $logged_in && $channelsStore.length > 0}
+			{#if $channelsTimestampStore}
+				Time of last get: {$channelsTimestampStore.toISOString()}
+			{/if}
+			{#each $channelsStore as stream}
+				<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
+			{/each}
+		{/if}
 
 	    {#if $logged_in && $channelsStore.length === 0}
 			Controls are in the the tool bar at the bottom.<br>

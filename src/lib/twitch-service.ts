@@ -3,7 +3,7 @@ import { access_token, current_user, CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
-import { channelsStore } from '$lib/stores/channelsStore';
+import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
 
 // async function getUserId() {
 //     const token = get(access_token);
@@ -77,6 +77,8 @@ export async function getStreams(category: string) {
 
     const maxDurationMs = maxDurationMinutes * 60 * 1000;
     const now = new Date();
+
+    channelsTimestampStore.set(now);
 
     for (let stream of liveFollowedStreams) {
         if (stream.game_name !== category) {
