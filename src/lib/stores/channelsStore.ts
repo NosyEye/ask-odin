@@ -28,9 +28,7 @@ const storedTimestamp = getStorageItem(timestampStorageName);
 
 let actualTimestampValue = new Date();
 try {
-    console.log(storedTimestamp)
-    const parsedValue = Date.parse(storedTimestamp);
-    console.log(parsedValue)
+    const parsedValue = parseInt(storedTimestamp);
     if (parsedValue) {
         actualTimestampValue = new Date(parsedValue);
     }
@@ -43,7 +41,7 @@ export const channelsTimestampStore = writable<Date>(actualTimestampValue);
 
 channelsTimestampStore.subscribe((timestamp: Date) => {
     if (timestamp instanceof Date) {
-        setStorageItem(timestampStorageName, timestamp.toISOString());
+        setStorageItem(timestampStorageName, timestamp.getTime());
     }
     else {
         removeStorageItem(timestampStorageName);
