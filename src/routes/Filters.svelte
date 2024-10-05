@@ -1,10 +1,17 @@
 <script lang="ts">
 	import { show_filters, max_minutes, min_viewers, max_viewers, minutes_to_raid } from '$lib/twitch-service';
 
+	import { XIcon } from 'svelte-feather-icons';
+
+	function closeFilters(){
+		show_filters.set(false);
+	}
+
 </script>
 
 {#if $show_filters}
 <div class="filters-box">
+		<button class="close-button" on:click={closeFilters}><XIcon/></button>
 		<label>Max minutes streamed<br><input type="range" min="0" max="300" step="20" bind:value={$max_minutes}></label>
 		{$max_minutes}
 		<label>Min viewers<br><input type="range" min="0" max="300" step="10" bind:value={$min_viewers}></label>
@@ -49,6 +56,16 @@
 			width: 50%;
 			margin-left: 25%;
 		}
+	}
+
+	.close-button {
+		border: none;
+		background: inherit;
+		color: inherit;
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 8px;
 	}
 
 </style>
