@@ -32,8 +32,6 @@
 
 	.dialog {
 		position: fixed;
-/* 		top: 50%; */
-/* 		left:20%; */
 
 		padding: 30px;
 
