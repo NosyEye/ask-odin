@@ -4,6 +4,8 @@ import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
 import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
+import type { Filter } from '$lib/types/filter';
+import { filterStore } from '$lib/stores/filterStore';
 
 // async function getUserId() {
 //     const token = get(access_token);
@@ -66,10 +68,12 @@ function durationToString(durationMs: number) {
 
 // export async function getStreams(category: string, maxDurationMinutes: number, minViewers: number, maxViewers: number, minutesToRaid: number) {
 export async function getStreams(category: string) {
-    const maxDurationMinutes = get(max_minutes);
-    const minViewers = get(min_viewers);
-    const maxViewers = get(max_viewers);
-    const minutesToRaid = get(minutes_to_raid);
+    const filter: Filter = get(filterStore);
+
+    const maxDurationMinutes = filter.maxMinutesStreamed;
+    const minViewers = filter.minViewers;
+    const maxViewers = filter.maxViewers;
+    const minutesToRaid = filter.minutesToRaid;
 
     const liveFollowedStreams = await getFollowedStreams();
 
