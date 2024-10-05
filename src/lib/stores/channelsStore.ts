@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store';
 import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/storage';
 
+import type { LiveStream } from '$lib/types/livestream';
+
 const channelsStorageName = 'channelsStore';
 
 const storedValue = getStorageItem(channelsStorageName);

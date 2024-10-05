@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { show_filters, max_minutes, min_viewers, max_viewers, minutes_to_raid } from '$lib/twitch-service';
+	import { filterStore } from '$lib/stores/filterStore';
 
 	import { XIcon } from 'svelte-feather-icons';
 
