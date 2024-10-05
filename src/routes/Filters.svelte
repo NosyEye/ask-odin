@@ -5,7 +5,7 @@
 	import { XIcon } from 'svelte-feather-icons';
 
 	function closeFilters(){
-		show_filters.set(false);
+		$show_filters = false;
 	}
 
 </script>
