@@ -1,11 +1,12 @@
 import { writable } from 'svelte/store';
-import { access_token, current_user, CLIENT_ID } from '$lib/auth';
+import { access_token, CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
 import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
 import type { Filter } from '$lib/types/filter';
 import { filterStore } from '$lib/stores/filterStore';
+import { userStore } from '$lib/stores/authStore';
 
 // async function getUserId() {
 //     const token = get(access_token);
@@ -45,7 +46,7 @@ async function getFollowedStreams() {
         headers: headers
     };
 
-    const user = get(current_user);
+    const user = get(userStore);
 
     const response = await fetch(`https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`, options);
     const responseObject = await response.json();

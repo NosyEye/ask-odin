@@ -5,10 +5,11 @@ import type { TwitchUser } from '$lib/types/twitchuser';
 
 import { dev } from '$app/environment';
 
+import { userStore } from '$lib/stores/authStore';
+
 
 export const access_token = writable('');
 export const logged_in = writable(false);
-export const current_user = writable<TwitchUser>();
 
 access_token.subscribe((token) => {
     if (token) {
@@ -84,12 +85,14 @@ async function getUser() {
     const response = await fetch('https://api.twitch.tv/helix/users', options);
     const responseObject = await response.json();
 
-    if (responseObject.data && responseObject.data.length > 0) {
+    if (response.status === 200 && responseObject.data && responseObject.data.length > 0) {
         const user: TwitchUser = {
             id: responseObject.data[0].id,
             display_name: responseObject.data[0].display_name
         };
-        current_user.set(user);
+        userStore.set(user);
+    } else {
+        requestTwitchAuth();
     }
 }
 

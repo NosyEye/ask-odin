@@ -22,22 +22,24 @@ authTokenStore.subscribe((channels) => {
 
 // User
 
-const userStorageName = 'userStore';
+export const userStore = writable<TwitchUser>();
 
-const storedValue = getStorageItem(userStorageName);
-let actualValue = [];
-try {
-    const parsedValue = JSON.parse(storedValue);
-    if (parsedValue) {
-        actualValue = parsedValue;
-    }
-}
-catch (error) {
-    console.error(error);
-}
+// const userStorageName = 'userStore';
+//
+// const storedValue = getStorageItem(userStorageName);
+// let actualValue = [];
+// try {
+//     const parsedValue = JSON.parse(storedValue);
+//     if (parsedValue) {
+//         actualValue = parsedValue;
+//     }
+// }
+// catch (error) {
+//     console.error(error);
+// }
 
-export const userStore = writable<TwitchUser>(actualValue);
+// export const userStore = writable<TwitchUser>(actualValue);
 
-userStore.subscribe((channels) => {
-    setStorageItem(userStorageName, JSON.stringify(channels));
-});
+// userStore.subscribe((channels) => {
+//     setStorageItem(userStorageName, JSON.stringify(channels));
+// });
