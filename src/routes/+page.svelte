@@ -90,7 +90,7 @@
 <!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
 		{#if $logged_in && $channelsStore.length > 0}
 			{#if $channelsTimestampStore}
-				Time of last get: {$channelsTimestampStore.toISOString()}
+				Time of last get: {$channelsTimestampStore.toLocaleString()}
 			{/if}
 			{#each $channelsStore as stream}
 				<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
