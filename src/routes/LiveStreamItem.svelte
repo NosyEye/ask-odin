@@ -3,6 +3,8 @@
     import { Trash2Icon } from 'svelte-feather-icons';
     import { createEventDispatcher } from 'svelte';
 
+    import ConfirmationDialog from './ConfirmationDialog.svelte';
+
     export let stream: LiveStream;
 
     const dispatch = createEventDispatcher();
@@ -17,6 +19,17 @@
         dispatch('select', {
             name: stream.name
         });
+    }
+
+    let deleteDialogVisible = false;
+    let deleteDialogText = 'Remove channel from list?';
+
+    function showDeleteDialog() {
+        deleteDialogVisible = true;
+    }
+
+    function onDeleteConfirm() {
+        deleteStream();
     }
 
 </script>
@@ -63,12 +76,12 @@
             </div>
         </div>
         <div class="stream-delete">
-            <button on:click={deleteStream}><Trash2Icon/></button>
+            <button on:click={showDeleteDialog}><Trash2Icon/></button>
         </div>
 </div>
 {/if}
 
-
+<ConfirmationDialog bind:showDialog={deleteDialogVisible} on:confirm={onDeleteConfirm} bind:dialogText={deleteDialogText}/>
 
 
 <style>

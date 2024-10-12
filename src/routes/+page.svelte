@@ -4,7 +4,8 @@
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
 	// import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
 	// import { onMount } from 'svelte';
-	import { getStreams, streams_store } from '$lib/twitch-service';
+	import { getStreams } from '$lib/twitch-service';
+	import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
 	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
@@ -68,11 +69,11 @@
 	function handleStreamDelete(deleteEvent) {
 		const streamToDelete = deleteEvent.detail.name;
 
-		const indexOfStream = $streams_store.findIndex(s => s.name === streamToDelete);
+		const indexOfStream = $channelsStore.findIndex(s => s.name === streamToDelete);
 
-		const toBeSpliced = $streams_store;
+		const toBeSpliced = $channelsStore;
 		toBeSpliced.splice(indexOfStream, 1);
-		$streams_store = toBeSpliced;
+		$channelsStore = toBeSpliced;
 	}
 
 </script>
@@ -87,11 +88,16 @@
 <!-- 		<pre>{streamTextBlock}</pre> -->
 
 <!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
-		{#each $streams_store as stream}
-			<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
-		{/each}
+		{#if $logged_in && $channelsStore.length > 0}
+			{#if $channelsTimestampStore}
+				Time of last get: {$channelsTimestampStore.toLocaleString()}
+			{/if}
+			{#each $channelsStore as stream}
+				<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
+			{/each}
+		{/if}
 
-	    {#if $logged_in && $streams_store.length === 0}
+	    {#if $logged_in && $channelsStore.length === 0}
 			Controls are in the the tool bar at the bottom.<br>
 			Specify filters for channels to get.<br>
 			Get a list of followed channels.<br>

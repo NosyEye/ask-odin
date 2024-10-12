@@ -3,6 +3,10 @@ import { access_token, current_user, CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
+import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
+import type { Filter } from '$lib/types/filter';
+import { filterStore } from '$lib/stores/filterStore';
+
 // async function getUserId() {
 //     const token = get(access_token);
 //     const headers = new Headers();
@@ -23,7 +27,7 @@ import type { LiveStream } from '$lib/types/livestream';
 // export const live_streams = writable<LiveStream[]>();
 
 
-export const streams_store = writable<LiveStream[]>([]);
+// export const streams_store = writable<LiveStream[]>([]);
 
 export const show_filters = writable(false);
 
@@ -64,10 +68,12 @@ function durationToString(durationMs: number) {
 
 // export async function getStreams(category: string, maxDurationMinutes: number, minViewers: number, maxViewers: number, minutesToRaid: number) {
 export async function getStreams(category: string) {
-    const maxDurationMinutes = get(max_minutes);
-    const minViewers = get(min_viewers);
-    const maxViewers = get(max_viewers);
-    const minutesToRaid = get(minutes_to_raid);
+    const filter: Filter = get(filterStore);
+
+    const maxDurationMinutes = filter.maxMinutesStreamed;
+    const minViewers = filter.minViewers;
+    const maxViewers = filter.maxViewers;
+    const minutesToRaid = filter.minutesToRaid;
 
     const liveFollowedStreams = await getFollowedStreams();
 
@@ -75,6 +81,8 @@ export async function getStreams(category: string) {
 
     const maxDurationMs = maxDurationMinutes * 60 * 1000;
     const now = new Date();
+
+    channelsTimestampStore.set(now);
 
     for (let stream of liveFollowedStreams) {
         if (stream.game_name !== category) {
@@ -101,12 +109,12 @@ export async function getStreams(category: string) {
         });
     }
 
-    streams_store.set(liveStreams);
+    channelsStore.set(liveStreams);
 }
 
 function toDiscordFormat() {
     let discordText = '```\n';
-    const streams = get(streams_store);
+    const streams = get(channelsStore);
     const selectedStreams = streams.filter(s => s.selected);
     for (const [index,stream] of selectedStreams.entries()) {
         discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')';
