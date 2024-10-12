@@ -4,9 +4,9 @@ import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/s
 import type { TwitchUser } from '$lib/types/twitchuser';
 
 // Token
-const authTokenStorageName = 'authTokenStore';
+const accessTokenStorageName = 'authTokenStore';
 
-const storedValue = getStorageItem(authTokenStorageName);
+const storedValue = getStorageItem(accessTokenStorageName);
 let actualValue = '';
 if (storedValue) {
     actualValue = storedValue;
@@ -14,10 +14,10 @@ if (storedValue) {
 
 
 
-export const authTokenStore = writable<string>(actualValue);
+export const accessTokenStore = writable<string>(actualValue);
 
-authTokenStore.subscribe((channels) => {
-    setStorageItem(authTokenStorageName, JSON.stringify(channels));
+accessTokenStore.subscribe((channels) => {
+    setStorageItem(accessTokenStorageName, JSON.stringify(channels));
 });
 
 // User
@@ -43,3 +43,7 @@ export const userStore = writable<TwitchUser>();
 // userStore.subscribe((channels) => {
 //     setStorageItem(userStorageName, JSON.stringify(channels));
 // });
+
+// Login status
+
+export const loggedInStore = writable(false);

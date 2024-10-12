@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { logged_in, logout } from '$lib/auth';
+	import { logout } from '$lib/auth';
 	import { userStore } from '$lib/stores/authStore';
     import { get } from 'svelte/store';
 
-	let loggedIn = get(logged_in);
-	logged_in.subscribe((status) => {
+    import { loggedInStore } from '$lib/stores/authStore';
+
+	let loggedIn = get(loggedInStore);
+	loggedInStore.subscribe((status) => {
         loggedIn = status;
 	});
 

@@ -1,12 +1,12 @@
 import { writable } from 'svelte/store';
-import { access_token, CLIENT_ID } from '$lib/auth';
+import { CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
 import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
 import type { Filter } from '$lib/types/filter';
 import { filterStore } from '$lib/stores/filterStore';
-import { userStore } from '$lib/stores/authStore';
+import { userStore, accessTokenStore } from '$lib/stores/authStore';
 
 // async function getUserId() {
 //     const token = get(access_token);
@@ -38,7 +38,7 @@ export const max_viewers = writable(3000);
 export const minutes_to_raid = writable(30);
 
 async function getFollowedStreams() {
-    const token = get(access_token);
+    const token = get(accessTokenStore);
     const headers = new Headers();
     headers.set('Authorization', `Bearer ${token}`);
     headers.set('Client-Id', CLIENT_ID);

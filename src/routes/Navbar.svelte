@@ -10,7 +10,7 @@
 
 	import { SlidersIcon, RefreshCcwIcon, CopyIcon } from 'svelte-feather-icons';
 
-	import { logged_in } from '$lib/auth';
+	import { loggedInStore } from '$lib/stores/authStore';
 
 	async function getTheStreams(){
 		await getStreams('Music');
@@ -20,7 +20,7 @@
 </script>
 
 <div class="navbar">
-	{#if $logged_in}
+	{#if $loggedInStore}
 	<div class="actions">
 		{#if $page.url.pathname === `${base}/`}
 		<button on:click={() => $show_filters = !$show_filters}><div class="action-icon"><SlidersIcon/></div></button>

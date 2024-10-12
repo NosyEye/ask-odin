@@ -9,11 +9,11 @@
 
 	import { HomeIcon, HelpCircleIcon } from 'svelte-feather-icons';
 
-	import { logged_in } from '$lib/auth';
     import { get } from 'svelte/store';
+    import { loggedInStore } from '$lib/stores/authStore';
 
-	let loggedIn = get(logged_in);
-	logged_in.subscribe((status) => {
+	let loggedIn = get(loggedInStore);
+	loggedInStore.subscribe((status) => {
         loggedIn = status;
 	});
 

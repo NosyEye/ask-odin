@@ -9,8 +9,7 @@
 	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
-
-	import { logged_in } from '$lib/auth';
+	import { loggedInStore } from '$lib/stores/authStore';
 
 	// onMount(() => {
 	// 	processTwitchAuth();
@@ -88,7 +87,7 @@
 <!-- 		<pre>{streamTextBlock}</pre> -->
 
 <!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
-		{#if $logged_in && $channelsStore.length > 0}
+		{#if $loggedInStore && $channelsStore.length > 0}
 			{#if $channelsTimestampStore}
 				Time of last get: {$channelsTimestampStore.toLocaleString()}
 			{/if}
@@ -97,14 +96,14 @@
 			{/each}
 		{/if}
 
-	    {#if $logged_in && $channelsStore.length === 0}
+	    {#if $loggedInStore && $channelsStore.length === 0}
 			Controls are in the the tool bar at the bottom.<br>
 			Specify filters for channels to get.<br>
 			Get a list of followed channels.<br>
 			Copy selected channels in markdown (Discord) code block.
 	    {/if}
 
-		{#if !$logged_in}
+		{#if !$loggedInStore}
 			Log in to use
 		{/if}
 

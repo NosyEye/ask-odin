@@ -5,17 +5,13 @@ import type { TwitchUser } from '$lib/types/twitchuser';
 
 import { dev } from '$app/environment';
 
-import { userStore } from '$lib/stores/authStore';
+import { userStore, accessTokenStore, loggedInStore } from '$lib/stores/authStore';
 
-
-export const access_token = writable('');
-export const logged_in = writable(false);
-
-access_token.subscribe((token) => {
+accessTokenStore.subscribe((token) => {
     if (token) {
-        logged_in.set(true);
+        loggedInStore.set(true);
     } else {
-        logged_in.set(false);
+        loggedInStore.set(false);
     }
 });
 
@@ -47,7 +43,7 @@ export function processTwitchAuth() {
     const locationHash = window.location.hash;
     if (locationHash) {
         const token = extractToken(locationHash);
-        access_token.set(token);
+        accessTokenStore.set(token);
         // goto('/');
         // goto('/ask-odin/');
 
@@ -70,11 +66,11 @@ function extractToken(hash) {
 }
 
 export function logout() {
-   access_token.set('');
+   accessTokenStore.set('');
 }
 
 async function getUser() {
-    const token = get(access_token);
+    const token = get(accessTokenStore);
     const headers = new Headers();
     headers.set('Authorization', `Bearer ${token}`);
     headers.set('Client-Id', CLIENT_ID);
