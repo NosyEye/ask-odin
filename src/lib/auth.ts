@@ -9,14 +9,6 @@ import { userStore, accessTokenStore, loggedInStore } from '$lib/stores/authStor
 
 import { fetchWithAuth } from '$lib/http';
 
-accessTokenStore.subscribe((token) => {
-    if (token) {
-        loggedInStore.set(true);
-    } else {
-        loggedInStore.set(false);
-    }
-});
-
 // Twitch app client id
 export const CLIENT_ID = 'v8wujfpreu728as1ms9nixfmxmyp2j';
 
@@ -72,6 +64,7 @@ function extractToken(hash) {
 }
 
 export function logout() {
+   loggedInStore.set(false);
    accessTokenStore.set('');
 }
 
@@ -88,6 +81,7 @@ async function getUser() {
             display_name: responseObject.data[0].display_name
         };
         userStore.set(user);
+        loggedInStore.set(true);
     }
 }
 

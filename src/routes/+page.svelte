@@ -7,7 +7,7 @@
 	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
-	import { loggedInStore } from '$lib/stores/authStore';
+	import { loggedInStore, accessTokenStore } from '$lib/stores/authStore';
 
 	// onMount(() => {
 	// 	processTwitchAuth();
@@ -73,24 +73,6 @@
 		$channelsStore = toBeSpliced;
 	}
 
-// 	import TimedAlertDialog from './TimedAlertDialog.svelte';
-//
-// 	let dialogText: string = 'Closing in';
-// 	let dialogButtonText: string = 'Stop';
-// 	let timerSeconds = 5;
-//
-// 	let showTimer: boolean = false;
-// 	function startTimer() {
-// 		showTimer = true;
-// 	}
-// 	function closeTimer() {
-// 		showTimer = false;
-// 	}
-//
-// 	onMount(
-// 	window.document.addEventListener('reauthenticate', () => {
-// 		startTimer();
-// 	});
 </script>
 
 <svelte:head>
@@ -99,10 +81,6 @@
 </svelte:head>
 
 <section>
-<!-- 		<button on:click={getRaidTargets}>Get followed streams</button> -->
-<!-- 		<pre>{streamTextBlock}</pre> -->
-
-<!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
 		{#if $loggedInStore && $channelsStore.length > 0}
 			{#if $channelsTimestampStore}
 				Time of last get: {$channelsTimestampStore.toLocaleString()}
@@ -122,21 +100,8 @@
 		{#if !$loggedInStore}
 			Log in to use
 		{/if}
-<!--		<button on:click={startTimer}>start timer</button>-->
-<!--		{#if showTimer}
-			<TimedAlertDialog on:close={closeTimer} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
-		{/if}-->
+
 </section>
-<!--<section>
-		<label>Max minutes streamed<input type="range" min="0" max="300" step="20" bind:value={maxMinutes}></label>
-		{maxMinutes}
-		<label>Min viewers<input type="range" min="0" max="300" step="10" bind:value={minViewers}></label>
-		{minViewers}
-		<label>Max viewers<input type="range" min="0" max="3000" step="100" bind:value={maxViewers}></label>
-		{maxViewers}
-		<label>Minutes to raid<input type="range" min="0" max="60" step="5" bind:value={minutesToRaid}></label>
-		{minutesToRaid}
-</section>-->
 
 <style>
 	section {
@@ -145,9 +110,5 @@
 		justify-content: center;
 		align-items: center;
 		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
 	}
 </style>

@@ -59,29 +59,10 @@
 
 
 <style>
-    .user {
-        background-color: var(--color-nav);
-        color: white;
-/*         height: 100%; */
-        width: 100%;
-        text-align: center;
-        line-height: 3.0em;
-
-    }
-
     .dropdown button {
         line-height: 2rem;
     }
 
-/*    .status {
-    display: inline-block;
-        vertical-align: middle;
-    }*/
-    span {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 1.0em;
-    }
 	button {
 		width: 100%;
 		height: 100%;
