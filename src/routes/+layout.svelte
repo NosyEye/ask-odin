@@ -1,28 +1,46 @@
-<script>
+<script lang="ts">
 	// import Header from './Header.svelte';
 	import '../app.css';
 	import Topbar from './Topbar.svelte';
 	import Navbar from './Navbar.svelte';
 	import Filters from './Filters.svelte';
 	import { onMount } from 'svelte';
-	import { processTwitchAuth} from '$lib/auth';
+	import { processTwitchAuth, requestTwitchAuth } from '$lib/auth';
+
+	import TimedAlertDialog from './TimedAlertDialog.svelte';
+
+	let dialogText: string = 'Twitch login expired. Re-authenticating in';
+	let dialogButtonText: string = 'Abort';
+	let timerSeconds = 5;
+
+	let showTimer: boolean = false;
+	function startTimer() {
+		showTimer = true;
+	}
+	function closeTimer() {
+		showTimer = false;
+	}
+	function authenticate(){
+		requestTwitchAuth();
+	}
+
 	onMount(() => {
 		processTwitchAuth();
+		window.document.addEventListener('reauthenticate', () => {
+			startTimer();
+		});
 	});
-
 
 </script>
 
 <div class="app">
-<!-- 	<Header /> -->
 	<Topbar/>
 	<main>
 		<slot />
+	{#if showTimer}
+		<TimedAlertDialog on:close={closeTimer} on:timeExpired={authenticate} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
+	{/if}
 	</main>
-
-	<footer>
-
-	</footer>
 
 	<Filters/>
 	<Navbar/>
@@ -46,23 +64,5 @@
 		box-sizing: border-box;
  		padding-top: 4rem;
  		padding-bottom: 4rem;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
 	}
 </style>

@@ -7,6 +7,8 @@ import { dev } from '$app/environment';
 
 import { userStore, accessTokenStore, loggedInStore } from '$lib/stores/authStore';
 
+import { fetchWithAuth } from '$lib/http';
+
 accessTokenStore.subscribe((token) => {
     if (token) {
         loggedInStore.set(true);
@@ -74,25 +76,18 @@ export function logout() {
 }
 
 async function getUser() {
-    const token = get(accessTokenStore);
-    const headers = new Headers();
-    headers.set('Authorization', `Bearer ${token}`);
-    headers.set('Client-Id', CLIENT_ID);
-    const options = {
-        headers: headers
-    };
-
-    const response = await fetch('https://api.twitch.tv/helix/users', options);
+    const response = await fetchWithAuth('https://api.twitch.tv/helix/users');
+    if (!response.ok) {
+        return;
+    }
     const responseObject = await response.json();
 
-    if (response.status === 200 && responseObject.data && responseObject.data.length > 0) {
+    if (responseObject.data && responseObject.data.length > 0) {
         const user: TwitchUser = {
             id: responseObject.data[0].id,
             display_name: responseObject.data[0].display_name
         };
         userStore.set(user);
-    } else {
-        requestTwitchAuth();
     }
 }
 

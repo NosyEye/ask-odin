@@ -1,7 +1,5 @@
 <script lang='ts'>
 	// import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
 	// import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
 	// import { onMount } from 'svelte';
 	import { getStreams } from '$lib/twitch-service';
@@ -75,19 +73,24 @@
 		$channelsStore = toBeSpliced;
 	}
 
-	import TimedAlertDialog from './TimedAlertDialog.svelte';
-
-	let dialogText: string = 'Closing in';
-	let dialogButtonText: string = 'Stop';
-	let timerSeconds = 5;
-
-	let showTimer: boolean = false;
-	function startTimer() {
-		showTimer = true;
-	}
-	function closeTimer() {
-		showTimer = false;
-	}
+// 	import TimedAlertDialog from './TimedAlertDialog.svelte';
+//
+// 	let dialogText: string = 'Closing in';
+// 	let dialogButtonText: string = 'Stop';
+// 	let timerSeconds = 5;
+//
+// 	let showTimer: boolean = false;
+// 	function startTimer() {
+// 		showTimer = true;
+// 	}
+// 	function closeTimer() {
+// 		showTimer = false;
+// 	}
+//
+// 	onMount(
+// 	window.document.addEventListener('reauthenticate', () => {
+// 		startTimer();
+// 	});
 </script>
 
 <svelte:head>
@@ -119,10 +122,10 @@
 		{#if !$loggedInStore}
 			Log in to use
 		{/if}
-		<button on:click={startTimer}>start timer</button>
-		{#if showTimer}
+<!--		<button on:click={startTimer}>start timer</button>-->
+<!--		{#if showTimer}
 			<TimedAlertDialog on:close={closeTimer} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
-		{/if}
+		{/if}-->
 </section>
 <!--<section>
 		<label>Max minutes streamed<input type="range" min="0" max="300" step="20" bind:value={maxMinutes}></label>
@@ -146,21 +149,5 @@
 
 	h1 {
 		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
 	}
 </style>

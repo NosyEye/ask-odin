@@ -7,36 +7,30 @@
 
 	export let buttonText: string;
 
-	let showDialog: boolean = true;
-
 	export let timeSeconds: number;
 
 	let timerText = `${timeSeconds} seconds`;
 
 	let currentTime = timeSeconds;
+	let timer;
 	function startTimer() {
-		const timer = setInterval(() => {
+		timer = setInterval(() => {
 			currentTime -= 1;
 			timerText = `${currentTime} seconds`;
 
 			if (currentTime === 0) {
 				onTimeExpired();
-				clearInterval(timer);
 			}
 		}, 1000);
 	}
 
 	function onTimeExpired() {
+		clearInterval(timer);
 		dispatch('timeExpired');
-		close();
-	}
-
-	function closeDialog() {
-		showDialog = false;
 	}
 
 	function close() {
-		showDialog = false;
+		clearInterval(timer);
 		dispatch('close');
 	}
 
@@ -47,7 +41,6 @@
 	});
 </script>
 
-{#if showDialog}
 <div class="dialog">
 {dialogText}
 <br>
@@ -57,7 +50,6 @@
 	<button on:click={close}>{buttonText}</button>
 </div>
 </div>
-{/if}
 
 <style>
 

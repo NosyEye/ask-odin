@@ -8,47 +8,19 @@ import type { Filter } from '$lib/types/filter';
 import { filterStore } from '$lib/stores/filterStore';
 import { userStore, accessTokenStore } from '$lib/stores/authStore';
 
-// async function getUserId() {
-//     const token = get(access_token);
-//     const headers = new Headers();
-//     headers.set('Authorization', `Bearer ${token}`);
-//     headers.set('Client-Id', CLIENT_ID);
-//     const options = {
-//         headers: headers
-//     };
-//
-//     const response = await fetch('https://api.twitch.tv/helix/users', options);
-//     const responseObject = await response.json();
-//
-//     if (responseObject.data && responseObject.data.length > 0) {
-//         return responseObject.data[0].id;
-//     }
-// }
-
-// export const live_streams = writable<LiveStream[]>();
-
-
-// export const streams_store = writable<LiveStream[]>([]);
+import { fetchWithAuth } from '$lib/http';
 
 export const show_filters = writable(false);
 
-export const max_minutes = writable(160);
-export const min_viewers = writable(0);
-export const max_viewers = writable(3000);
-export const minutes_to_raid = writable(30);
-
 async function getFollowedStreams() {
-    const token = get(accessTokenStore);
-    const headers = new Headers();
-    headers.set('Authorization', `Bearer ${token}`);
-    headers.set('Client-Id', CLIENT_ID);
-    const options = {
-        headers: headers
-    };
-
     const user = get(userStore);
 
-    const response = await fetch(`https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`, options);
+    const response = await fetchWithAuth(`https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`);
+
+    if (!response.ok) {
+        return [];
+    }
+
     const responseObject = await response.json();
     return responseObject.data;
 }
