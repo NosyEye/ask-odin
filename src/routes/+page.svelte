@@ -1,7 +1,5 @@
 <script lang='ts'>
 	// import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
 	// import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
 	// import { onMount } from 'svelte';
 	import { getStreams } from '$lib/twitch-service';
@@ -9,8 +7,7 @@
 	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
-
-	import { logged_in } from '$lib/auth';
+	import { loggedInStore, accessTokenStore } from '$lib/stores/authStore';
 
 	// onMount(() => {
 	// 	processTwitchAuth();
@@ -84,11 +81,7 @@
 </svelte:head>
 
 <section>
-<!-- 		<button on:click={getRaidTargets}>Get followed streams</button> -->
-<!-- 		<pre>{streamTextBlock}</pre> -->
-
-<!-- 		<button on:click={copySelectedStreamsForDiscord}>Copy selected for Discord</button> -->
-		{#if $logged_in && $channelsStore.length > 0}
+		{#if $loggedInStore && $channelsStore.length > 0}
 			{#if $channelsTimestampStore}
 				Time of last get: {$channelsTimestampStore.toLocaleString()}
 			{/if}
@@ -97,28 +90,18 @@
 			{/each}
 		{/if}
 
-	    {#if $logged_in && $channelsStore.length === 0}
+	    {#if $loggedInStore && $channelsStore.length === 0}
 			Controls are in the the tool bar at the bottom.<br>
 			Specify filters for channels to get.<br>
 			Get a list of followed channels.<br>
 			Copy selected channels in markdown (Discord) code block.
 	    {/if}
 
-		{#if !$logged_in}
+		{#if !$loggedInStore}
 			Log in to use
 		{/if}
 
 </section>
-<!--<section>
-		<label>Max minutes streamed<input type="range" min="0" max="300" step="20" bind:value={maxMinutes}></label>
-		{maxMinutes}
-		<label>Min viewers<input type="range" min="0" max="300" step="10" bind:value={minViewers}></label>
-		{minViewers}
-		<label>Max viewers<input type="range" min="0" max="3000" step="100" bind:value={maxViewers}></label>
-		{maxViewers}
-		<label>Minutes to raid<input type="range" min="0" max="60" step="5" bind:value={minutesToRaid}></label>
-		{minutesToRaid}
-</section>-->
 
 <style>
 	section {
@@ -127,25 +110,5 @@
 		justify-content: center;
 		align-items: center;
 		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
 	}
 </style>

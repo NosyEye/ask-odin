@@ -5,18 +5,9 @@ import type { TwitchUser } from '$lib/types/twitchuser';
 
 import { dev } from '$app/environment';
 
+import { userStore, accessTokenStore, loggedInStore } from '$lib/stores/authStore';
 
-export const access_token = writable('');
-export const logged_in = writable(false);
-export const current_user = writable<TwitchUser>();
-
-access_token.subscribe((token) => {
-    if (token) {
-        logged_in.set(true);
-    } else {
-        logged_in.set(false);
-    }
-});
+import { fetchWithAuth } from '$lib/http';
 
 // Twitch app client id
 export const CLIENT_ID = 'v8wujfpreu728as1ms9nixfmxmyp2j';
@@ -32,8 +23,7 @@ export function requestTwitchAuth() {
     else {
         redirectUrl = 'https://nosyeye.github.io/ask-odin/';
     }
-    // const redirectUrl = 'http://localhost:5173/';
-    // const redirectUrl = 'https://nosyeye.github.io/ask-odin/';
+
     const responseType = 'token';
     const scope = 'user:read:follows';
 
@@ -46,9 +36,8 @@ export function processTwitchAuth() {
     const locationHash = window.location.hash;
     if (locationHash) {
         const token = extractToken(locationHash);
-        access_token.set(token);
-        // goto('/');
-        // goto('/ask-odin/');
+
+        accessTokenStore.set(token);
 
         if (dev) {
             goto('/');
@@ -58,6 +47,12 @@ export function processTwitchAuth() {
         }
 
         getUser();
+    } else {
+        const token = get(accessTokenStore);
+
+        if (token !== '') {
+            getUser();
+        }
     }
 }
 
@@ -69,19 +64,15 @@ function extractToken(hash) {
 }
 
 export function logout() {
-   access_token.set('');
+   loggedInStore.set(false);
+   accessTokenStore.set('');
 }
 
 async function getUser() {
-    const token = get(access_token);
-    const headers = new Headers();
-    headers.set('Authorization', `Bearer ${token}`);
-    headers.set('Client-Id', CLIENT_ID);
-    const options = {
-        headers: headers
-    };
-
-    const response = await fetch('https://api.twitch.tv/helix/users', options);
+    const response = await fetchWithAuth('https://api.twitch.tv/helix/users');
+    if (!response.ok) {
+        return;
+    }
     const responseObject = await response.json();
 
     if (responseObject.data && responseObject.data.length > 0) {
@@ -89,7 +80,8 @@ async function getUser() {
             id: responseObject.data[0].id,
             display_name: responseObject.data[0].display_name
         };
-        current_user.set(user);
+        userStore.set(user);
+        loggedInStore.set(true);
     }
 }
 

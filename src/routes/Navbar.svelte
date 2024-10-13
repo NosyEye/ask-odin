@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
 
 	import AuthButton from './AuthButton.svelte';
@@ -10,7 +9,7 @@
 
 	import { SlidersIcon, RefreshCcwIcon, CopyIcon } from 'svelte-feather-icons';
 
-	import { logged_in } from '$lib/auth';
+	import { loggedInStore } from '$lib/stores/authStore';
 
 	async function getTheStreams(){
 		await getStreams('Music');
@@ -20,7 +19,7 @@
 </script>
 
 <div class="navbar">
-	{#if $logged_in}
+	{#if $loggedInStore}
 	<div class="actions">
 		{#if $page.url.pathname === `${base}/`}
 		<button on:click={() => $show_filters = !$show_filters}><div class="action-icon"><SlidersIcon/></div></button>

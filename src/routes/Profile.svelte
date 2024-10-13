@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { logged_in, current_user, logout } from '$lib/auth';
+	import { logout } from '$lib/auth';
+	import { userStore } from '$lib/stores/authStore';
     import { get } from 'svelte/store';
 
-	let loggedIn = get(logged_in);
-	logged_in.subscribe((status) => {
+    import { loggedInStore } from '$lib/stores/authStore';
+
+	let loggedIn = get(loggedInStore);
+	loggedInStore.subscribe((status) => {
         loggedIn = status;
 	});
 
 	let currentUser = null;
-	current_user.subscribe((user) => {
+	userStore.subscribe((user) => {
         currentUser = user;
 	});
 
@@ -56,29 +59,10 @@
 
 
 <style>
-    .user {
-        background-color: var(--color-nav);
-        color: white;
-/*         height: 100%; */
-        width: 100%;
-        text-align: center;
-        line-height: 3.0em;
-
-    }
-
     .dropdown button {
         line-height: 2rem;
     }
 
-/*    .status {
-    display: inline-block;
-        vertical-align: middle;
-    }*/
-    span {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 1.0em;
-    }
 	button {
 		width: 100%;
 		height: 100%;
