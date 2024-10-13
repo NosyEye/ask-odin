@@ -75,6 +75,19 @@
 		$channelsStore = toBeSpliced;
 	}
 
+	import TimedAlertDialog from './TimedAlertDialog.svelte';
+
+	let dialogText: string = 'Closing in';
+	let dialogButtonText: string = 'Stop';
+	let timerSeconds = 5;
+
+	let showTimer: boolean = false;
+	function startTimer() {
+		showTimer = true;
+	}
+	function closeTimer() {
+		showTimer = false;
+	}
 </script>
 
 <svelte:head>
@@ -106,7 +119,10 @@
 		{#if !$loggedInStore}
 			Log in to use
 		{/if}
-
+		<button on:click={startTimer}>start timer</button>
+		{#if showTimer}
+			<TimedAlertDialog on:close={closeTimer} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
+		{/if}
 </section>
 <!--<section>
 		<label>Max minutes streamed<input type="range" min="0" max="300" step="20" bind:value={maxMinutes}></label>

@@ -4,7 +4,7 @@ import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/s
 import type { TwitchUser } from '$lib/types/twitchuser';
 
 // Token
-const accessTokenStorageName = 'authTokenStore';
+const accessTokenStorageName = 'accessTokenStore';
 
 const storedValue = getStorageItem(accessTokenStorageName);
 let actualValue = '';
@@ -16,8 +16,8 @@ if (storedValue) {
 
 export const accessTokenStore = writable<string>(actualValue);
 
-accessTokenStore.subscribe((channels) => {
-    setStorageItem(accessTokenStorageName, JSON.stringify(channels));
+accessTokenStore.subscribe((token) => {
+    setStorageItem(accessTokenStorageName, token);
 });
 
 // User

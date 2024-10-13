@@ -29,8 +29,7 @@ export function requestTwitchAuth() {
     else {
         redirectUrl = 'https://nosyeye.github.io/ask-odin/';
     }
-    // const redirectUrl = 'http://localhost:5173/';
-    // const redirectUrl = 'https://nosyeye.github.io/ask-odin/';
+
     const responseType = 'token';
     const scope = 'user:read:follows';
 
@@ -43,9 +42,8 @@ export function processTwitchAuth() {
     const locationHash = window.location.hash;
     if (locationHash) {
         const token = extractToken(locationHash);
+
         accessTokenStore.set(token);
-        // goto('/');
-        // goto('/ask-odin/');
 
         if (dev) {
             goto('/');
@@ -55,6 +53,12 @@ export function processTwitchAuth() {
         }
 
         getUser();
+    } else {
+        const token = get(accessTokenStore);
+
+        if (token !== '') {
+            getUser();
+        }
     }
 }
 
