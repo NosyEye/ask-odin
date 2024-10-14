@@ -22,3 +22,5 @@ export const filterStore = writable<Filter>(actualValue);
 filterStore.subscribe((filter) => {
     setStorageItem(filterStorageName, JSON.stringify(filter));
 });
+
+export const showFiltersStore = writable(false);

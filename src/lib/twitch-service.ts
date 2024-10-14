@@ -10,8 +10,6 @@ import { userStore, accessTokenStore } from '$lib/stores/authStore';
 
 import { fetchWithAuth } from '$lib/http';
 
-export const show_filters = writable(false);
-
 async function getFollowedStreams() {
     const user = get(userStore);
 

@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { show_filters } from '$lib/twitch-service';
-	import { filterStore } from '$lib/stores/filterStore';
+	import { filterStore, showFiltersStore } from '$lib/stores/filterStore';
 
 	import { XIcon } from 'svelte-feather-icons';
 
 	function closeFilters(){
-		$show_filters = false;
+		$showFiltersStore = false;
 	}
 
 </script>
 
-{#if $show_filters}
+{#if $showFiltersStore}
 <div class="filters-box">
 		<button class="close-button" on:click={closeFilters}><XIcon/></button>
 		<label>Max minutes streamed<br><input type="range" min="0" max="300" step="20" bind:value={$filterStore.maxMinutesStreamed}></label>
