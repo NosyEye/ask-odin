@@ -1,9 +1,10 @@
 <script lang='ts'>
 	import { getStreams } from '$lib/twitch-service';
-	import { streamsStore, streamsTimestampStore } from '$lib/stores/streamsStore';
+	import { streamsStore, filteredStreamsStore, streamsTimestampStore } from '$lib/stores/streamsStore';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
 	import { loggedInStore } from '$lib/stores/authStore';
+	import { onMount } from 'svelte';
 
 	let streamTextBlock  = '';
 
@@ -64,16 +65,16 @@
 </svelte:head>
 
 <section>
-		{#if $loggedInStore && $streamsStore.length > 0}
+		{#if $loggedInStore && $filteredStreamsStore.length > 0}
 			{#if $streamsTimestampStore}
 				Time of last get: {$streamsTimestampStore.toLocaleString()}
 			{/if}
-			{#each $streamsStore as stream}
-				<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
+			{#each $filteredStreamsStore as stream}
+				<LiveStreamItem stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
 			{/each}
 		{/if}
 
-	    {#if $loggedInStore && $streamsStore.length === 0}
+	    {#if $loggedInStore && $filteredStreamsStore.length === 0}
 			Controls are in the the tool bar at the bottom.<br>
 			Specify filters for channels to get.<br>
 			Get a list of followed channels.<br>

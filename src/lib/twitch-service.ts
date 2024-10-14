@@ -3,7 +3,7 @@ import { CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
-import { streamsStore, streamsTimestampStore } from '$lib/stores/streamsStore';
+import { streamsStore, streamsTimestampStore, filteredStreamsStore } from '$lib/stores/streamsStore';
 import type { Filter } from '$lib/types/filter';
 import { filterStore } from '$lib/stores/filterStore';
 import { userStore, accessTokenStore } from '$lib/stores/authStore';
@@ -43,9 +43,9 @@ export async function getStreams(category: string) {
     const now = new Date();
     streamsTimestampStore.set(now);
 
-    const filteredFollowedStreams = filterStreams(liveFollowedStreams, get(filterStore));
+    //const filteredFollowedStreams = filterStreams(liveFollowedStreams, get(filterStore));
 
-    streamsStore.set(filteredFollowedStreams);
+    streamsStore.set(liveFollowedStreams);
 }
 
 export function filterStreams(streams: any[], filter: any): LiveStream[] {
@@ -84,7 +84,7 @@ export function filterStreams(streams: any[], filter: any): LiveStream[] {
 
 function toDiscordFormat() {
     let discordText = '```\n';
-    const streams = get(channelsStore);
+    const streams = get(filteredStreamsStore);
     const selectedStreams = streams.filter(s => s.selected);
     for (const [index,stream] of selectedStreams.entries()) {
         discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')';

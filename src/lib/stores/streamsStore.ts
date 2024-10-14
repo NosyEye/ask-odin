@@ -1,6 +1,8 @@
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/storage';
 
+import { filterStreams } from '$lib/twitch-service';
+import { filterStore } from '$lib/stores/filterStore';
 import type { LiveStream } from '$lib/types/livestream';
 
 const streamsStorageName = 'streamsStore';
@@ -22,6 +24,10 @@ export const streamsStore = writable<LiveStream[]>(actualValue);
 streamsStore.subscribe((streams) => {
    setStorageItem(streamsStorageName, JSON.stringify(streams));
 });
+
+// Filtered streams
+
+export const filteredStreamsStore = derived<LiveStream[]>([streamsStore, filterStore], ([$streamsStore, $filterStore]) => filterStreams($streamsStore, $filterStore));
 
 // Timestamp
 const timestampStorageName = 'streamsTimestampStore';
