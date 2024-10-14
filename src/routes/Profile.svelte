@@ -1,19 +1,8 @@
 <script lang="ts">
 	import { logout } from '$lib/auth';
 	import { userStore } from '$lib/stores/authStore';
-    import { get } from 'svelte/store';
 
     import { loggedInStore } from '$lib/stores/authStore';
-
-	let loggedIn = get(loggedInStore);
-	loggedInStore.subscribe((status) => {
-        loggedIn = status;
-	});
-
-	let currentUser = null;
-	userStore.subscribe((user) => {
-        currentUser = user;
-	});
 
 	let profileDropdownOpen: boolean = false;
 
@@ -45,8 +34,8 @@
 
 </script>
 
-{#if loggedIn && currentUser}
-<button on:click={toggleProfileDropdown} bind:this={profileButton}>{currentUser.display_name}</button>
+{#if $loggedInStore && $userStore}
+<button on:click={toggleProfileDropdown} bind:this={profileButton}>{$userStore.display_name}</button>
 {/if}
 
 

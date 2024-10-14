@@ -7,13 +7,7 @@
 
 	import { HomeIcon, HelpCircleIcon } from 'svelte-feather-icons';
 
-    import { get } from 'svelte/store';
     import { loggedInStore } from '$lib/stores/authStore';
-
-	let loggedIn = get(loggedInStore);
-	loggedInStore.subscribe((status) => {
-        loggedIn = status;
-	});
 
 </script>
 
@@ -33,7 +27,7 @@
 	</div>
 
 	<div class="corner">
-		    {#if loggedIn}
+		    {#if $loggedInStore}
 			<Profile/>
 			{:else}
 			<AuthButton/>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type  { LiveStream } from '$lib/types/livestream';
+    import type { LiveStream } from '$lib/types/livestream';
     import { Trash2Icon } from 'svelte-feather-icons';
     import { createEventDispatcher } from 'svelte';
 

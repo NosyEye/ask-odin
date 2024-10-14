@@ -1,23 +1,9 @@
 <script lang='ts'>
-	// import Counter from './Counter.svelte';
-	// import {requestTwitchAuth, processTwitchAuth} from '$lib/auth';
-	// import { onMount } from 'svelte';
 	import { getStreams } from '$lib/twitch-service';
 	import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
-	import { get } from 'svelte/store';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
-	import { loggedInStore, accessTokenStore } from '$lib/stores/authStore';
-
-	// onMount(() => {
-	// 	processTwitchAuth();
-	// });
-
-	// let streams = get(streams_store);
-	// streams_store.subscribe((_streams) => {
-	// console.log(_streams)
- //        streams = _streams;
-	// });
+	import { loggedInStore } from '$lib/stores/authStore';
 
 	let streamTextBlock  = '';
 
@@ -26,10 +12,7 @@
 	let maxViewers = 3000;
 	let minutesToRaid = 30;
 
-	// let streams = [];
-
 	async function getRaidTargets() {
-		//streams = await getStreams('Music', maxMinutes, minViewers, maxViewers, minutesToRaid);
 		await getStreams('Music', maxMinutes, minViewers, maxViewers, minutesToRaid);
 		streamTextBlock = '';
 		for (let stream of streams) {

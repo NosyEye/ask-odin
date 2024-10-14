@@ -14,7 +14,7 @@
 
 	async function getTheStreams(){
 		await getStreams('Music');
-		showFiltersStore.set(false);
+		$showFiltersStore = false;
 	}
 
 </script>

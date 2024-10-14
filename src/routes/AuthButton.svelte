@@ -3,21 +3,21 @@
     import { get } from 'svelte/store';
     import { loggedInStore } from '$lib/stores/authStore';
 
-	let loggedIn = get(loggedInStore);
-	loggedInStore.subscribe((status) => {
-        loggedIn = status;
-	});
+	// let loggedIn = get(loggedInStore);
+	// loggedInStore.subscribe((status) => {
+ //        loggedIn = status;
+	// });
 
 </script>
 
-{#if loggedIn}
+<!--{#if $loggedInStore}
 <button on:click={logout}>
 Log out
 </button>
-{/if}
+{/if}-->
 
 
-{#if !loggedIn}
+{#if !$loggedInStore}
 <button on:click={requestTwitchAuth}>
 Log in with Twitch
 </button>
