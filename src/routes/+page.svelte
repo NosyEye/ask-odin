@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import { getStreams } from '$lib/twitch-service';
-	import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
+	import { streamsStore, streamsTimestampStore } from '$lib/stores/streamsStore';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
 	import { loggedInStore } from '$lib/stores/authStore';
@@ -49,11 +49,11 @@
 	function handleStreamDelete(deleteEvent) {
 		const streamToDelete = deleteEvent.detail.name;
 
-		const indexOfStream = $channelsStore.findIndex(s => s.name === streamToDelete);
+		const indexOfStream = $streamsStore.findIndex(s => s.name === streamToDelete);
 
-		const toBeSpliced = $channelsStore;
+		const toBeSpliced = $streamsStore;
 		toBeSpliced.splice(indexOfStream, 1);
-		$channelsStore = toBeSpliced;
+		$streamsStore = toBeSpliced;
 	}
 
 </script>
@@ -64,16 +64,16 @@
 </svelte:head>
 
 <section>
-		{#if $loggedInStore && $channelsStore.length > 0}
-			{#if $channelsTimestampStore}
-				Time of last get: {$channelsTimestampStore.toLocaleString()}
+		{#if $loggedInStore && $streamsStore.length > 0}
+			{#if $streamsTimestampStore}
+				Time of last get: {$streamsTimestampStore.toLocaleString()}
 			{/if}
-			{#each $channelsStore as stream}
+			{#each $streamsStore as stream}
 				<LiveStreamItem bind:stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
 			{/each}
 		{/if}
 
-	    {#if $loggedInStore && $channelsStore.length === 0}
+	    {#if $loggedInStore && $streamsStore.length === 0}
 			Controls are in the the tool bar at the bottom.<br>
 			Specify filters for channels to get.<br>
 			Get a list of followed channels.<br>

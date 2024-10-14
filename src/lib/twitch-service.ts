@@ -3,7 +3,7 @@ import { CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
-import { channelsStore, channelsTimestampStore } from '$lib/stores/channelsStore';
+import { streamsStore, streamsTimestampStore } from '$lib/stores/streamsStore';
 import type { Filter } from '$lib/types/filter';
 import { filterStore } from '$lib/stores/filterStore';
 import { userStore, accessTokenStore } from '$lib/stores/authStore';
@@ -41,11 +41,11 @@ function durationToString(durationMs: number) {
 export async function getStreams(category: string) {
     const liveFollowedStreams = await getFollowedStreams();
     const now = new Date();
-    channelsTimestampStore.set(now);
+    streamsTimestampStore.set(now);
 
     const filteredFollowedStreams = filterStreams(liveFollowedStreams, get(filterStore));
 
-    channelsStore.set(filteredFollowedStreams);
+    streamsStore.set(filteredFollowedStreams);
 }
 
 export function filterStreams(streams: any[], filter: any): LiveStream[] {

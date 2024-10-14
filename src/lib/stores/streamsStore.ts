@@ -3,9 +3,9 @@ import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/s
 
 import type { LiveStream } from '$lib/types/livestream';
 
-const channelsStorageName = 'channelsStore';
+const streamsStorageName = 'streamsStore';
 
-const storedValue = getStorageItem(channelsStorageName);
+const storedValue = getStorageItem(streamsStorageName);
 let actualValue = [];
 try {
     const parsedValue = JSON.parse(storedValue);
@@ -17,14 +17,14 @@ catch (error) {
     console.error(error);
 }
 
-export const channelsStore = writable<LiveStream[]>(actualValue);
+export const streamsStore = writable<LiveStream[]>(actualValue);
 
-channelsStore.subscribe((channels) => {
-   setStorageItem(channelsStorageName, JSON.stringify(channels));
+streamsStore.subscribe((streams) => {
+   setStorageItem(streamsStorageName, JSON.stringify(streams));
 });
 
 // Timestamp
-const timestampStorageName = 'channelsTimestampStore';
+const timestampStorageName = 'streamsTimestampStore';
 
 const storedTimestamp = getStorageItem(timestampStorageName);
 
@@ -39,9 +39,9 @@ catch (error) {
     console.error(error);
 }
 
-export const channelsTimestampStore = writable<Date>(actualTimestampValue);
+export const streamsTimestampStore = writable<Date>(actualTimestampValue);
 
-channelsTimestampStore.subscribe((timestamp: Date) => {
+streamsTimestampStore.subscribe((timestamp: Date) => {
     if (timestamp instanceof Date) {
         setStorageItem(timestampStorageName, timestamp.getTime());
     }
