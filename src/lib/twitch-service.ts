@@ -39,48 +39,47 @@ function durationToString(durationMs: number) {
 
 // export async function getStreams(category: string, maxDurationMinutes: number, minViewers: number, maxViewers: number, minutesToRaid: number) {
 export async function getStreams(category: string) {
-    const filter: Filter = get(filterStore);
-
-    const maxDurationMinutes = filter.maxMinutesStreamed;
-    const minViewers = filter.minViewers;
-    const maxViewers = filter.maxViewers;
-    const minutesToRaid = filter.minutesToRaid;
-
     const liveFollowedStreams = await getFollowedStreams();
-
-    let liveStreams: LiveStream[] = [];
-
-    const maxDurationMs = maxDurationMinutes * 60 * 1000;
     const now = new Date();
-
     channelsTimestampStore.set(now);
 
-    for (let stream of liveFollowedStreams) {
-        if (stream.game_name !== category) {
+    const filteredFollowedStreams = filterStreams(liveFollowedStreams, get(filterStore));
+
+    channelsStore.set(filteredFollowedStreams);
+}
+
+export function filterStreams(streams: any[], filter: any): LiveStream[] {
+    const maxDurationMs = filter.maxMinutesStreamed * 60 * 1000;
+
+    let filteredStreams: LiveStream[] = [];
+
+    const now = new Date();
+    for (const stream of streams) {
+        if (stream.game_name !== filter.category) {
             continue;
         }
 
         const streamStartTime = new Date(stream.started_at);
-        const duration = now - streamStartTime + minutesToRaid * 60 * 1000;
-        if (duration > maxDurationMs) {
+        const durationMs = now - streamStartTime + filter.minutesToRaid * 60 * 1000;
+        if (durationMs > maxDurationMs) {
             continue;
         }
 
-        if (stream.viewer_count > maxViewers || stream.viewer_count < minViewers) {
+        if (stream.viewer_count > filter.maxViewers || stream.viewer_count < filter.minViewers) {
             continue;
         }
 
-        liveStreams.push({
-           name: stream.user_name,
-           runningTime: durationToString(duration),
-           viewers: stream.viewer_count,
-           title: stream.title,
-           link: `https://twitch.tv/${stream.user_login}`,
-           selected: false
+        filteredStreams.push({
+            name: stream.user_name,
+            runningTime: durationToString(durationMs),
+                         viewers: stream.viewer_count,
+                         title: stream.title,
+                         link: `https://twitch.tv/${stream.user_login}`,
+                         selected: false
         });
     }
 
-    channelsStore.set(liveStreams);
+    return filteredStreams;
 }
 
 function toDiscordFormat() {
