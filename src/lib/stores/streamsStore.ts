@@ -25,10 +25,6 @@ streamsStore.subscribe((streams) => {
    setStorageItem(streamsStorageName, JSON.stringify(streams));
 });
 
-// Filtered streams
-export const filteredStreamsStore = function () { return 'bla'}
-
-
 // Timestamp
 const timestampStorageName = 'streamsTimestampStore';
 

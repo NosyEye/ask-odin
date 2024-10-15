@@ -1,4 +1,3 @@
-import { writable } from 'svelte/store';
 import { goto } from '$app/navigation';
 import { get } from 'svelte/store';
 import type { TwitchUser } from '$lib/types/twitchuser';

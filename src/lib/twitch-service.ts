@@ -1,12 +1,10 @@
-import { writable } from 'svelte/store';
-import { CLIENT_ID } from '$lib/auth';
 import { get } from 'svelte/store';
 import type { LiveStream } from '$lib/types/livestream';
 
-import { streamsStore, streamsTimestampStore, filteredStreamsStore } from '$lib/stores/streamsStore';
+import { streamsStore, streamsTimestampStore } from '$lib/stores/streamsStore';
 import type { Filter } from '$lib/types/filter';
 import { filterStore } from '$lib/stores/filterStore';
-import { userStore, accessTokenStore } from '$lib/stores/authStore';
+import { userStore } from '$lib/stores/authStore';
 
 import { fetchWithAuth } from '$lib/http';
 
@@ -69,7 +67,7 @@ export async function getStreams() {
     streamsStore.set(updatedStreams);
 }
 
-export function filterStreams(streams: any[], filter: any) {
+export function filterStreams(streams: any[], filter: Filter) {
     const maxDurationMs = filter.maxMinutesStreamed * 60 * 1000;
 
     const now = new Date();
