@@ -42,21 +42,6 @@
 		const textToCopy = toDiscordFormat();
 		navigator.clipboard.writeText(textToCopy);
 	}
-
-	function handleSelectStream(selectEvent) {
-
-	}
-
-	function handleStreamDelete(deleteEvent) {
-		const streamToDelete = deleteEvent.detail.name;
-
-		const indexOfStream = $streamsStore.findIndex(s => s.name === streamToDelete);
-
-		const toBeSpliced = $streamsStore;
-		toBeSpliced.splice(indexOfStream, 1);
-		$streamsStore = toBeSpliced;
-	}
-
 </script>
 
 <svelte:head>
@@ -65,16 +50,18 @@
 </svelte:head>
 
 <section>
-		{#if $loggedInStore && $filteredStreamsStore.length > 0}
+		{#if $loggedInStore && $streamsStore.length > 0}
 			{#if $streamsTimestampStore}
 				Time of last get: {$streamsTimestampStore.toLocaleString()}
 			{/if}
-			{#each $filteredStreamsStore as stream}
-				<LiveStreamItem stream={stream} on:delete={handleStreamDelete} on:select={handleSelectStream} />
+			{#each $streamsStore as stream}
+				{#if !stream.filteredOut && !stream.deleted}
+					<LiveStreamItem bind:stream={stream}/>
+				{/if}
 			{/each}
 		{/if}
 
-	    {#if $loggedInStore && $filteredStreamsStore.length === 0}
+	    {#if $loggedInStore && $streamsStore.length === 0}
 			Controls are in the the tool bar at the bottom.<br>
 			Specify filters for channels to get.<br>
 			Get a list of followed channels.<br>

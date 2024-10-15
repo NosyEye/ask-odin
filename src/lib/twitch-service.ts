@@ -10,7 +10,7 @@ import { userStore, accessTokenStore } from '$lib/stores/authStore';
 
 import { fetchWithAuth } from '$lib/http';
 
-async function getFollowedStreams() {
+async function getLiveFollowedStreams() {
     const user = get(userStore);
 
     const response = await fetchWithAuth(`https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`);
@@ -37,55 +37,75 @@ function durationToString(durationMs: number) {
     return hours.toString() + ':' + minutesString;
 }
 
-// export async function getStreams(category: string, maxDurationMinutes: number, minViewers: number, maxViewers: number, minutesToRaid: number) {
 export async function getStreams(category: string) {
-    const liveFollowedStreams = await getFollowedStreams();
+    const liveFollowedStreams = await getLiveFollowedStreams();
     const now = new Date();
     streamsTimestampStore.set(now);
 
-    //const filteredFollowedStreams = filterStreams(liveFollowedStreams, get(filterStore));
+    const currentStreams = get(streamsStore);
 
-    streamsStore.set(liveFollowedStreams);
+    let updatedStreams = [];
+    for (const stream of liveFollowedStreams) {
+        const currentStream = currentStreams.find(s => s.name === stream.user_name);
+
+        const streamStartTime = new Date(stream.started_at);
+        const durationMs = now - streamStartTime;
+
+        updatedStreams.push({
+            name: stream.user_name,
+            category: stream.game_name,
+            adjustedRunningTimeString: durationToString(durationMs),
+            runningTime: durationMs,
+            adjustedRunningTime: durationMs,
+            viewers: stream.viewer_count,
+            title: stream.title,
+            link: `https://twitch.tv/${stream.user_login}`,
+            selected: currentStream ? currentStream.selected : false,
+            deleted: currentStream ? currentStream.deleted : false,
+            filteredOut: currentStream ? currentStream.filteredOut : false
+        });
+    }
+    filterStreams(updatedStreams, get(filterStore));
+    streamsStore.set(updatedStreams);
 }
 
-export function filterStreams(streams: any[], filter: any): LiveStream[] {
+export function filterStreams(streams: any[], filter: any) {
     const maxDurationMs = filter.maxMinutesStreamed * 60 * 1000;
-
-    let filteredStreams: LiveStream[] = [];
 
     const now = new Date();
     for (const stream of streams) {
-        if (stream.game_name !== filter.category) {
+        stream.adjustedRunningTime = stream.runningTime + filter.minutesToRaid * 60 * 1000;
+        stream.adjustedRunningTimeString = durationToString(stream.adjustedRunningTime);
+
+        if (stream.category !== filter.category) {
+            stream.filteredOut = true;
             continue;
         }
 
-        const streamStartTime = new Date(stream.started_at);
-        const durationMs = now - streamStartTime + filter.minutesToRaid * 60 * 1000;
-        if (durationMs > maxDurationMs) {
+        if (stream.adjustedRunningTime > maxDurationMs) {
+            stream.filteredOut = true;
             continue;
         }
 
-        if (stream.viewer_count > filter.maxViewers || stream.viewer_count < filter.minViewers) {
+        if (stream.viewers > filter.maxViewers || stream.viewers < filter.minViewers) {
+            stream.filteredOut = true;
             continue;
         }
 
-        filteredStreams.push({
-            name: stream.user_name,
-            runningTime: durationToString(durationMs),
-                         viewers: stream.viewer_count,
-                         title: stream.title,
-                         link: `https://twitch.tv/${stream.user_login}`,
-                         selected: false
-        });
+        stream.filteredOut = false;
     }
-
-    return filteredStreams;
 }
+
+filterStore.subscribe((filter) => {
+   let streams = get(streamsStore);
+   filterStreams(streams, filter);
+   streamsStore.set(streams);
+});
 
 function toDiscordFormat() {
     let discordText = '```\n';
-    const streams = get(filteredStreamsStore);
-    const selectedStreams = streams.filter(s => s.selected);
+    const streams = get(streamsStore);
+    const selectedStreams = streams.filter(s => s.selected && !s.deleted && !s.filteredOut);
     for (const [index,stream] of selectedStreams.entries()) {
         discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')';
 
