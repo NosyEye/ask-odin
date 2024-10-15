@@ -16,9 +16,9 @@
 
 <section>
 		{#if $loggedInStore && $streamsStore.length > 0}
-			{#if $streamsTimestampStore}
+<!--			{#if $streamsTimestampStore}
 				Time of last get: {$streamsTimestampStore.toLocaleString()}
-			{/if}
+			{/if}-->
 			{#each $streamsStore as stream}
 				{#if !stream.filteredOut && !stream.deleted}
 					<LiveStreamItem bind:stream={stream}/>

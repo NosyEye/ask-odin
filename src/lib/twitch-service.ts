@@ -67,6 +67,34 @@ export async function getStreams() {
     streamsStore.set(updatedStreams);
 }
 
+export async function getStreamsAndReset() {
+    const liveFollowedStreams = await getLiveFollowedStreams();
+    const now = new Date();
+    streamsTimestampStore.set(now);
+
+    const streams = [];
+    for (const stream of liveFollowedStreams) {
+        const streamStartTime = new Date(stream.started_at);
+        const durationMs = now - streamStartTime;
+
+        streams.push({
+            name: stream.user_name,
+            category: stream.game_name,
+            adjustedRunningTimeString: durationToString(durationMs),
+                            runningTime: durationMs,
+                            adjustedRunningTime: durationMs,
+                            viewers: stream.viewer_count,
+                            title: stream.title,
+                            link: `https://twitch.tv/${stream.user_login}`,
+                            selected: false,
+                            deleted: false,
+                            filteredOut: false
+        });
+    }
+    filterStreams(streams, get(filterStore));
+    streamsStore.set(streams);
+}
+
 export function filterStreams(streams: any[], filter: Filter) {
     const maxDurationMs = filter.maxMinutesStreamed * 60 * 1000;
 

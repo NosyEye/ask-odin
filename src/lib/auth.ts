@@ -31,7 +31,7 @@ export function requestTwitchAuth() {
     window.location = authUrl;
 }
 
-export function processTwitchAuth() {
+export async function processTwitchAuth() {
     const locationHash = window.location.hash;
     if (locationHash) {
         const token = extractToken(locationHash);
@@ -45,12 +45,12 @@ export function processTwitchAuth() {
             goto('/ask-odin/');
         }
 
-        getUser();
+        await getUser();
     } else {
         const token = get(accessTokenStore);
 
         if (token !== '') {
-            getUser();
+            await getUser();
         }
     }
 }
