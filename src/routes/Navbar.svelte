@@ -13,7 +13,7 @@
 	import { loggedInStore } from '$lib/stores/authStore';
 
 	async function getTheStreams(){
-		await getStreams('Music');
+		await getStreams();
 		$showFiltersStore = false;
 	}
 

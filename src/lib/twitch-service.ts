@@ -37,7 +37,7 @@ function durationToString(durationMs: number) {
     return hours.toString() + ':' + minutesString;
 }
 
-export async function getStreams(category: string) {
+export async function getStreams() {
     const liveFollowedStreams = await getLiveFollowedStreams();
     const now = new Date();
     streamsTimestampStore.set(now);
