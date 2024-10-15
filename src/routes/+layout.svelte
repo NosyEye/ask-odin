@@ -26,6 +26,7 @@
 	}
 
 	let loading = true;
+	const streamsRefreshInterval = 1000 * 60;
 	onMount(async () => {
 		await processTwitchAuth();
 		window.document.addEventListener('reauthenticate', () => {
@@ -33,7 +34,7 @@
 		});
 		await getStreams();
 		loading = false;
-		setInterval(getStreams, 1000*60);
+		setInterval(getStreams, streamsRefreshInterval);
 	});
 
 
