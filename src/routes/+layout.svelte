@@ -6,6 +6,7 @@
 	import Filters from './Filters.svelte';
 	import { onMount } from 'svelte';
 	import { processTwitchAuth, requestTwitchAuth } from '$lib/auth';
+	import { getStreams } from '$lib/twitch-service';
 
 	import TimedAlertDialog from './TimedAlertDialog.svelte';
 
@@ -24,19 +25,29 @@
 		requestTwitchAuth();
 	}
 
-	onMount(() => {
-		processTwitchAuth();
+	let loading = true;
+	onMount(async () => {
+		await processTwitchAuth();
 		window.document.addEventListener('reauthenticate', () => {
 			startTimer();
 		});
+		await getStreams();
+		loading = false;
+		setInterval(getStreams, 1000*60);
 	});
+
 
 </script>
 
 <div class="app">
 	<Topbar/>
 	<main>
+	{#if loading}
+		Loading...
+	{:else}
 		<slot />
+	{/if}
+
 	{#if showTimer}
 		<TimedAlertDialog on:close={closeTimer} on:timeExpired={authenticate} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
 	{/if}

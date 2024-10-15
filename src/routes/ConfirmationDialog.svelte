@@ -33,6 +33,8 @@
 	.dialog {
 		position: fixed;
 
+		top: 10em;
+
 		padding: 30px;
 
 		background-color: #000;

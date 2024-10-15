@@ -7,20 +7,6 @@
 
     export let stream: LiveStream;
 
-    const dispatch = createEventDispatcher();
-
-    function deleteStream() {
-        dispatch('delete', {
-            name: stream.name
-        });
-    }
-
-    function selectStream() {
-        dispatch('select', {
-            name: stream.name
-        });
-    }
-
     let deleteDialogVisible = false;
     let deleteDialogText = 'Remove channel from list?';
 
@@ -29,7 +15,7 @@
     }
 
     function onDeleteConfirm() {
-        deleteStream();
+        stream.deleted = true;
     }
 
 </script>
@@ -59,13 +45,13 @@
 </div>-->
 <div class="stream-card">
     <div class="stream-selector">
-        <input type="checkbox" bind:checked={stream.selected} on:change={selectStream}>
+        <input type="checkbox" bind:checked={stream.selected}>
     </div>
             <div class="stream-name">
                 <a href={stream.link} target="_blank">{stream.name}</a>
             </div>
             <div class="stream-duration">
-                {stream.runningTime}
+                {stream.adjustedRunningTimeString}
             </div>
             <div class="stream-viewers">
                 {stream.viewers}

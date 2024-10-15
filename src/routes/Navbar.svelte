@@ -5,15 +5,15 @@
 
 	import AuthButton from './AuthButton.svelte';
 	import Profile from './Profile.svelte';
-	import { getStreams, copySelectedStreamsForDiscord } from '$lib/twitch-service';
+	import { copySelectedStreamsForDiscord, getStreamsAndReset } from '$lib/twitch-service';
 	import { showFiltersStore } from '$lib/stores/filterStore';
 
 	import { SlidersIcon, RefreshCcwIcon, CopyIcon } from 'svelte-feather-icons';
 
 	import { loggedInStore } from '$lib/stores/authStore';
 
-	async function getTheStreams(){
-		await getStreams('Music');
+	async function reset() {
+		await getStreamsAndReset();
 		$showFiltersStore = false;
 	}
 
@@ -25,7 +25,7 @@
 		{#if $page.url.pathname === `${base}/`}
 		<button on:click={() => $showFiltersStore = !$showFiltersStore}><div class="action-icon"><SlidersIcon/></div></button>
 
-		<button on:click={getTheStreams}><div class="action-icon"><RefreshCcwIcon/></div></button>
+		<button on:click={reset}><div class="action-icon"><RefreshCcwIcon/></div></button>
 
 		<button on:click={copySelectedStreamsForDiscord}><div class="action-icon"><CopyIcon/></div></button>
 		{/if}
