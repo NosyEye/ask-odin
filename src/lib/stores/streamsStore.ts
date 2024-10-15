@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/storage';
-
+import { browser } from '$app/environment';
 import { filterStreams } from '$lib/twitch-service';
 import { filterStore } from '$lib/stores/filterStore';
 import type { LiveStream } from '$lib/types/livestream';
@@ -10,9 +10,11 @@ const streamsStorageName = 'streamsStore';
 const storedValue = getStorageItem(streamsStorageName);
 let actualValue = [];
 try {
-    const parsedValue = JSON.parse(storedValue);
-    if (parsedValue && Array.isArray(parsedValue)) {
-        actualValue = parsedValue;
+    if (browser) {
+        const parsedValue = JSON.parse(storedValue);
+        if (parsedValue && Array.isArray(parsedValue)) {
+            actualValue = parsedValue;
+        }
     }
 }
 catch (error) {
