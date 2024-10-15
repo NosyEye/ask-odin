@@ -7,6 +7,12 @@
 		$showFiltersStore = false;
 	}
 
+	const minutesToRaidUpdateInterval = 1000 * 60;
+	setInterval(() => {
+		const newMinutes = $filterStore.minutesToRaid - 1;
+		$filterStore.minutesToRaid = newMinutes > 0 ? newMinutes : 0;
+	}, minutesToRaidUpdateInterval);
+
 </script>
 
 {#if $showFiltersStore}
@@ -18,7 +24,7 @@
 		{$filterStore.minViewers}
 		<label>Max viewers<br><input type="range" min="0" max="3000" step="100" bind:value={$filterStore.maxViewers}></label>
 		{$filterStore.maxViewers}
-		<label>Minutes to raid<br><input type="range" min="0" max="60" step="5" bind:value={$filterStore.minutesToRaid}></label>
+		<label>Minutes to raid<br><input type="range" min="0" max="60" step="1" bind:value={$filterStore.minutesToRaid}></label>
 		{$filterStore.minutesToRaid}
 </div>
 {/if}
