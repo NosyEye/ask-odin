@@ -17,6 +17,11 @@
 	$: maxViewers = $filterStore.maxViewers === 3000 ? 'No limit' : $filterStore.maxViewers;
 
 </script>
+<div class="raid-timer">
+Raid in {$filterStore.minutesToRaid} minutes<br>
+<input type="range" min="0" max="60" step="1" bind:value={$filterStore.minutesToRaid}>
+</div>
+
 
 {#if $showFiltersStore}
 <div class="filters-box">
@@ -27,12 +32,38 @@
 		{$filterStore.minViewers}
 		<label>Max viewers<br><input type="range" min="0" max="3000" step="100" bind:value={$filterStore.maxViewers}></label>
 		{maxViewers}
-		<label>Minutes to raid<br><input type="range" min="0" max="60" step="1" bind:value={$filterStore.minutesToRaid}></label>
-		{$filterStore.minutesToRaid}
 </div>
 {/if}
 
 <style>
+	.raid-timer {
+		border-top: 2px solid #555;
+		padding-top: 4px;
+		position: fixed;
+        background: #000;
+        color: #fff;
+        top: 3em;
+        width: 100%;
+        height: 3em;
+		text-align: center;
+	}
+
+	.raid-timer input {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+    @media (max-width:480px) {
+		.raid-timer input {
+			width:90%;
+		}
+	}
+
+	@media (min-width:481px) {
+		.raid-timer input {
+			width:50%;
+		}
+	}
 
     .filters-box {
 		display: flex;
@@ -44,7 +75,6 @@
 		height: 20em;
 		justify-content: center;
 		align-items: center;
-/* 		flex: 0.6; */
     }
 
     @media (max-width:480px) {
