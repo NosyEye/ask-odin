@@ -74,7 +74,7 @@
 		max-width: 64rem;
 		margin: 0 auto;
 		box-sizing: border-box;
- 		padding-top: 4rem;
+ 		padding-top: 7rem;
  		padding-bottom: 4rem;
 	}
 </style>

@@ -108,12 +108,12 @@ export function filterStreams(streams: any[], filter: Filter) {
             continue;
         }
 
-        if (stream.adjustedRunningTime > maxDurationMs) {
+        if (filter.maxMinutesStreamed !== 300 && stream.adjustedRunningTime > maxDurationMs) {
             stream.filteredOut = true;
             continue;
         }
 
-        if (stream.viewers > filter.maxViewers || stream.viewers < filter.minViewers) {
+        if ((filter.maxViewers !== 3000 && stream.viewers > filter.maxViewers) || stream.viewers < filter.minViewers) {
             stream.filteredOut = true;
             continue;
         }
