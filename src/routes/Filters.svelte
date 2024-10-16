@@ -53,15 +53,27 @@ Raid in {$filterStore.minutesToRaid} minutes<br>
 		vertical-align: middle;
 	}
 
-    @media (max-width:480px) {
+	@media (max-width:360px) {
 		.raid-timer input {
-			width:90%;
+			width:240px;
 		}
 	}
 
-	@media (min-width:481px) {
+    @media (min-width:361px) and (max-width:480px) {
 		.raid-timer input {
-			width:50%;
+			width:320px;
+		}
+	}
+
+	@media (min-width:481px) and (max-width:768px) {
+		.raid-timer input {
+			width:420px;
+		}
+	}
+
+	@media (min-width:769px) {
+		.raid-timer input {
+			width:600px;
 		}
 	}
 
