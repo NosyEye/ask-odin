@@ -13,17 +13,20 @@
 		$filterStore.minutesToRaid = newMinutes > 0 ? newMinutes : 0;
 	}, minutesToRaidUpdateInterval);
 
+	$: maxMinutes = $filterStore.maxMinutesStreamed === 300 ? 'No limit' : $filterStore.maxMinutesStreamed;
+	$: maxViewers = $filterStore.maxViewers === 3000 ? 'No limit' : $filterStore.maxViewers;
+
 </script>
 
 {#if $showFiltersStore}
 <div class="filters-box">
 		<button class="close-button" on:click={closeFilters}><XIcon/></button>
 		<label>Max minutes streamed<br><input type="range" min="0" max="300" step="20" bind:value={$filterStore.maxMinutesStreamed}></label>
-		{$filterStore.maxMinutesStreamed}
+		{maxMinutes}
 		<label>Min viewers<br><input type="range" min="0" max="300" step="10" bind:value={$filterStore.minViewers}></label>
 		{$filterStore.minViewers}
 		<label>Max viewers<br><input type="range" min="0" max="3000" step="100" bind:value={$filterStore.maxViewers}></label>
-		{$filterStore.maxViewers}
+		{maxViewers}
 		<label>Minutes to raid<br><input type="range" min="0" max="60" step="1" bind:value={$filterStore.minutesToRaid}></label>
 		{$filterStore.minutesToRaid}
 </div>
