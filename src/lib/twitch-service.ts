@@ -39,64 +39,93 @@ function durationToString(durationMs: number) {
     return hours.toString() + ':' + minutesString;
 }
 
+let locked = Promise.resolve(null);
+
 export async function getStreams() {
-    const liveFollowedStreams = await getLiveFollowedStreams();
-    const now = new Date();
-    streamsTimestampStore.set(now);
+    locked.then(async function() {
+        const liveFollowedStreams = await getLiveFollowedStreams();
+        const now = new Date();
+        streamsTimestampStore.set(now);
 
-    const currentStreams = get(streamsStore);
+        const currentStreams = get(streamsStore);
 
-    let updatedStreams = [];
-    for (const stream of liveFollowedStreams) {
-        const currentStream = currentStreams.find(s => s.name === stream.user_name);
+        let updatedStreams = [];
+        for (const stream of liveFollowedStreams) {
+            const currentStream = currentStreams.find(s => s.name === stream.user_name);
 
-        const streamStartTime = new Date(stream.started_at);
-        const durationMs = now - streamStartTime;
+            const streamStartTime = new Date(stream.started_at);
+            const durationMs = now - streamStartTime;
 
-        updatedStreams.push({
-            name: stream.user_name,
-            category: stream.game_name,
-            adjustedRunningTimeString: durationToString(durationMs),
-            runningTime: durationMs,
-            adjustedRunningTime: durationMs,
-            viewers: stream.viewer_count,
-            title: stream.title,
-            link: `https://twitch.tv/${stream.user_login}`,
-            selected: currentStream ? currentStream.selected : false,
-            deleted: currentStream ? currentStream.deleted : false,
-            filteredOut: currentStream ? currentStream.filteredOut : false
-        });
-    }
-    filterStreams(updatedStreams, get(filterStore));
-    streamsStore.set(updatedStreams);
+            updatedStreams.push({
+                name: stream.user_name,
+                category: stream.game_name,
+                adjustedRunningTimeString: durationToString(durationMs),
+                runningTime: durationMs,
+                adjustedRunningTime: durationMs,
+                viewers: stream.viewer_count,
+                title: stream.title,
+                link: `https://twitch.tv/${stream.user_login}`,
+                selected: currentStream ? currentStream.selected : false,
+                deleted: currentStream ? currentStream.deleted : false,
+                filteredOut: currentStream ? currentStream.filteredOut : false,
+                offline: false
+            });
+        }
+
+        for (let stream of currentStreams) {
+            if (stream.offline) {
+                continue;
+            }
+
+            const inUpdated = updatedStreams.find(s => s.name === stream.name);
+
+            if (!inUpdated) {
+                stream.offline = true;
+                stream.selected = false;
+                updatedStreams.push(stream);
+            }
+        }
+        updatedStreams.sort(sortByViewersDesc);
+
+        filterStreams(updatedStreams, get(filterStore));
+        streamsStore.set(updatedStreams);
+    });
+}
+
+function sortByViewersDesc(a, b) {
+    return a.viewers < b.viewers;
 }
 
 export async function getStreamsAndReset() {
-    const liveFollowedStreams = await getLiveFollowedStreams();
-    const now = new Date();
-    streamsTimestampStore.set(now);
+    locked.then(async function() {
 
-    const streams = [];
-    for (const stream of liveFollowedStreams) {
-        const streamStartTime = new Date(stream.started_at);
-        const durationMs = now - streamStartTime;
+        const liveFollowedStreams = await getLiveFollowedStreams();
+        const now = new Date();
+        streamsTimestampStore.set(now);
 
-        streams.push({
-            name: stream.user_name,
-            category: stream.game_name,
-            adjustedRunningTimeString: durationToString(durationMs),
-                            runningTime: durationMs,
-                            adjustedRunningTime: durationMs,
-                            viewers: stream.viewer_count,
-                            title: stream.title,
-                            link: `https://twitch.tv/${stream.user_login}`,
-                            selected: false,
-                            deleted: false,
-                            filteredOut: false
-        });
-    }
-    filterStreams(streams, get(filterStore));
-    streamsStore.set(streams);
+        const streams = [];
+        for (const stream of liveFollowedStreams) {
+            const streamStartTime = new Date(stream.started_at);
+            const durationMs = now - streamStartTime;
+
+            streams.push({
+                name: stream.user_name,
+                category: stream.game_name,
+                adjustedRunningTimeString: durationToString(durationMs),
+                runningTime: durationMs,
+                adjustedRunningTime: durationMs,
+                viewers: stream.viewer_count,
+                title: stream.title,
+                link: `https://twitch.tv/${stream.user_login}`,
+                selected: false,
+                deleted: false,
+                filteredOut: false,
+                offline: false
+            });
+        }
+        filterStreams(streams, get(filterStore));
+        streamsStore.set(streams);
+    });
 }
 
 export function filterStreams(streams: any[], filter: Filter) {
@@ -127,9 +156,11 @@ export function filterStreams(streams: any[], filter: Filter) {
 }
 
 filterStore.subscribe((filter) => {
-   let streams = get(streamsStore);
-   filterStreams(streams, filter);
-   streamsStore.set(streams);
+    locked.then(function() {
+        let streams = get(streamsStore);
+        filterStreams(streams, filter);
+        streamsStore.set(streams);
+    });
 });
 
 function toDiscordFormat() {

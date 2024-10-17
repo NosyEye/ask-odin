@@ -43,6 +43,7 @@
 		display: flex;
 		justify-content: center;
 		height: 3em;
+		z-index: 1000;
 	}
 
 	.action-icon {

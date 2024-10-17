@@ -10,6 +10,6 @@ export class Filter {
         this.minViewers = initialFilter?.minViewers ? initialFilter?.minViewers : 0;
         this.maxViewers = initialFilter?.maxViewers ? initialFilter?.maxViewers : 3000;
         this.maxMinutesStreamed = initialFilter?.maxMinutesStreamed ? initialFilter?.maxMinutesStreamed : 120;
-        this.minutesToRaid = initialFilter?.minutesToRaid ? initialFilter?.minutesToRaid : 30;
+        this.minutesToRaid = initialFilter?.minutesToRaid !== undefined ? initialFilter?.minutesToRaid : 30;
     }
 }

@@ -50,6 +50,7 @@
         width: 100%;
         height: 3em;
 		text-align: center;
+		z-index: 1000;
 	}
 
 	.raid-timer input {

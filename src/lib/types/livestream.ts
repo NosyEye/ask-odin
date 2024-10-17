@@ -10,4 +10,5 @@ export interface LiveStream {
     selected: boolean;
     deleted: boolean;
     filteredOut: boolean
+    offline: boolean;
 }
