@@ -133,7 +133,7 @@ function toDiscordFormat() {
     const streams = get(streamsStore);
     const selectedStreams = streams.filter(s => s.selected && !s.deleted && !s.filteredOut);
     for (const [index,stream] of selectedStreams.entries()) {
-        discordText += stream.name.padEnd(25, ' ') + stream.runningTime + ' (' + stream.viewers + ')';
+        discordText += stream.name.padEnd(25, ' ') + stream.adjustedRunningTimeString + ' (' + stream.viewers + ')';
 
         if (index < selectedStreams.length - 1) {
             discordText += '\n\n';
