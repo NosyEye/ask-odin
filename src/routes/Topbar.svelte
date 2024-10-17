@@ -45,6 +45,7 @@
 		color: #fff;
 		display: flex;
 		justify-content: space-between;
+		z-index: 1000;
 	}
 
 	.corner {

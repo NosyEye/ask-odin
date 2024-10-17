@@ -64,6 +64,11 @@
         <div class="stream-delete">
             <button on:click={showDeleteDialog}><Trash2Icon/></button>
         </div>
+    {#if stream.offline}
+    <div class="offline-overlay">
+        <div class="offline-text">OFFLINE</div>
+    </div>
+    {/if}
 </div>
 {/if}
 
@@ -71,7 +76,25 @@
 
 
 <style>
+    .offline-overlay {
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 2.4em;
+        font-size: 2em;
+        background-color: rgba(0,0,0,0.5);
+        color: #FFF;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+
+/*    .offline-text {
+        position: relative;
+    }*/
+
     .stream-card {
+        position: relative;
         width: 100%;
         border: 1px solid black;
         border-radius: 4px;
