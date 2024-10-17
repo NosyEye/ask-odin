@@ -41,7 +41,7 @@
 	});
 </script>
 
-<div class="dialog">
+<dialog open>
 {dialogText}
 <br>
 {timerText}
@@ -49,11 +49,11 @@
 <div class="dialog-buttons">
 	<button on:click={close}>{buttonText}</button>
 </div>
-</div>
+</dialog>
 
 <style>
 
-	.dialog {
+	dialog {
 		position: fixed;
 
 		padding: 30px;
@@ -72,7 +72,7 @@
 	}
 
 	button {
-		width: 3em;
+		width: 5em;
 		text-align: center;
 	}
 </style>

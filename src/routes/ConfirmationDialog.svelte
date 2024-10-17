@@ -18,19 +18,19 @@
 </script>
 
 {#if showDialog}
-<div class="dialog">
+<dialog open>
 {dialogText}
 <br>
 <div class="dialog-buttons">
 	<button on:click={confirm}>Yes</button>
 	<button on:click={closeDialog}>No</button>
 </div>
-</div>
+</dialog>
 {/if}
 
 <style>
 
-	.dialog {
+	dialog {
 		position: fixed;
 
 		top: 10em;
