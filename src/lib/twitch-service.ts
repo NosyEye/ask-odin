@@ -8,8 +8,12 @@ import { userStore } from '$lib/stores/authStore';
 
 import { fetchWithAuth } from '$lib/http';
 
-async function getLiveFollowedStreams() {
+async function getLiveFollowedStreams(): any[] {
     const user = get(userStore);
+
+    if (!user) {
+        return [];
+    }
 
     const response = await fetchWithAuth(`https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`);
 

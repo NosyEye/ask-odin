@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { filterStore, showFiltersStore } from '$lib/stores/filterStore';
-
+	import { loggedInStore } from '$lib/stores/authStore';
+	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import { XIcon } from 'svelte-feather-icons';
 
 	function closeFilters(){
@@ -17,10 +19,12 @@
 	$: maxViewers = $filterStore.maxViewers === 3000 ? 'No limit' : $filterStore.maxViewers;
 
 </script>
+{#if $loggedInStore && $page.url.pathname === `${base}/`}
 <div class="raid-timer">
-Raid in {$filterStore.minutesToRaid} minutes<br>
-<input type="range" min="0" max="60" step="1" bind:value={$filterStore.minutesToRaid}>
+	Raid in {$filterStore.minutesToRaid} minutes<br>
+	<input type="range" min="0" max="60" step="1" bind:value={$filterStore.minutesToRaid}>
 </div>
+{/if}
 
 
 {#if $showFiltersStore}
