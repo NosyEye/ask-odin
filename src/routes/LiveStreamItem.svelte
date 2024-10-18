@@ -101,19 +101,12 @@
         padding: 4px;
         margin: 4px;
         display: grid;
-        grid-template-columns: [selector] 3rem [name] auto [duration] 4rem [viewers] 4rem [delete] 3rem [end];
-        grid-template-rows: [info] 2rem [title] 2rem [bottom];
-
     }
 
     .stream-selector {
 /*         width: 2rem; */
         display: flex;
         padding: 0.5rem;
-        grid-column-start: selector;
-        grid-column-end: name;
-        grid-row-start: info;
-        grid-row-end: bottom;
     }
 
     input[type=checkbox] {
@@ -132,26 +125,14 @@
     .stream-name {
 /*         display: inline-block; */
         font-size: 1.2rem;
-        grid-column-start: name;
-        grid-column-end: duration;
-        grid-row-start: info;
-        grid-row-end: title;
     }
 
     .stream-duration {
 /*         display: inline-block; */
-        grid-column-start: duration;
-        grid-column-end: viewers;
-        grid-row-start: info;
-        grid-row-end: title;
     }
 
     .stream-viewers {
 /*         display: inline-block; */
-        grid-column-start: viewers;
-        grid-column-end: delete;
-        grid-row-start: info;
-        grid-row-end: title;
     }
 
     .stream-title {
@@ -163,10 +144,6 @@
 /*        width: 100%;
   min-height: 0;
   min-width: 0;*/
-        grid-column-start: name;
-        grid-column-end: delete;
-        grid-row-start: title;
-        grid-row-end: bottom;
     }
 
     .stream-title-content {
@@ -180,11 +157,119 @@
         display: flex;
         padding-top: 1rem;
         color: #800020;
-        grid-column-start: delete;
-        grid-column-end: end;
-        grid-row-start: info;
-        grid-row-end: bottom;
     }
+
+
+    @media (max-width:480px) {
+        .stream-card {
+            grid-template-columns: [selector] 3rem [name] 4rem [viewers] auto [delete] 3rem [end];
+            grid-template-rows: [head] 2rem [details1] 1.5rem [details2] 2rem [bottom];
+        }
+
+        .stream-selector {
+            grid-column-start: selector;
+            grid-column-end: name;
+            grid-row-start: head;
+            grid-row-end: bottom;
+        }
+
+        .stream-name {
+            grid-column-start: name;
+            grid-column-end: delete;
+            grid-row-start: head;
+            grid-row-end: details1;
+        }
+
+        .stream-duration {
+            grid-column-start: name;
+            grid-column-end: viewers;
+            grid-row-start: details1;
+            grid-row-end: details2;
+        }
+
+        .stream-viewers {
+            grid-column-start: viewers;
+            grid-column-end: delete;
+            grid-row-start: details1;
+            grid-row-end: details2;
+        }
+
+        .stream-title {
+            grid-column-start: name;
+            grid-column-end: delete;
+            grid-row-start: details2;
+            grid-row-end: bottom;
+        }
+
+        .stream-delete {
+            grid-column-start: delete;
+            grid-column-end: end;
+            grid-row-start: head;
+            grid-row-end: bottom;
+        }
+	}
+
+    @media (min-width:480px) {
+        .stream-card {
+            grid-template-columns: [selector] 3rem [name] auto [duration] 4rem [viewers] 4rem [delete] 3rem [end];
+            grid-template-rows: [head] 2rem [title] 2rem [bottom];
+        }
+
+        .stream-selector {
+            grid-column-start: selector;
+            grid-column-end: name;
+            grid-row-start: head;
+            grid-row-end: bottom;
+        }
+
+        .stream-name {
+            grid-column-start: name;
+            grid-column-end: duration;
+            grid-row-start: head;
+            grid-row-end: title;
+        }
+
+        .stream-duration {
+            grid-column-start: duration;
+            grid-column-end: viewers;
+            grid-row-start: head;
+            grid-row-end: title;
+        }
+
+        .stream-viewers {
+            grid-column-start: viewers;
+            grid-column-end: delete;
+            grid-row-start: head;
+            grid-row-end: title;
+        }
+
+        .stream-title {
+            grid-column-start: name;
+            grid-column-end: delete;
+            grid-row-start: title;
+            grid-row-end: bottom;
+        }
+
+        .stream-delete {
+            grid-column-start: delete;
+            grid-column-end: end;
+            grid-row-start: head;
+            grid-row-end: bottom;
+        }
+	}
+
+/*	@media (min-width:481px) and (max-width:768px) {
+		.raid-timer input {
+			width:420px;
+		}
+	}
+
+	@media (min-width:769px) {
+		.raid-timer input {
+			width:600px;
+		}
+	}*/
+
 
 /*    .stream-card {
         width: 100%;
