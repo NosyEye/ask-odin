@@ -108,11 +108,27 @@
     }
 
     .stream-delete {
-        display: flex;
-        padding-top: 1rem;
-        color: #800020;
+/*         display: flex; */
+/*         padding-top: 1rem; */
+/*         color: #800020; */
     }
 
+    .stream-delete button {
+        height: 100%;
+        width: 100%;
+        background-color: inherit;
+        color: var(--color-card-name);
+        border: none;
+        border-radius: 4px;
+    }
+
+    .stream-delete button:hover {
+        background-color: var(--color-card-button-hover);
+    }
+
+    .stream-delete button:active {
+        background-color: var(--color-card-button-hover);
+    }
 
     @media (max-width:480px) {
         .stream-card {

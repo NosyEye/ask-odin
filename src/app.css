@@ -11,9 +11,10 @@
 	--color-card-border: #AAA;
 	--color-card-name: #EEE;
 	--color-card-details: #BBB;
+	--color-card-button-hover: #001;
 	--color-bar-bg: #213;
 	--color-bar-text: #EEE;
-	--color-bar-button-hover: #102;
+	--color-bar-button-hover: #001;
 	--color-bar-separator: #AAA;
 	--color-about-text: #FFF;
 }
