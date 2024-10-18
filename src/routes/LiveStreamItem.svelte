@@ -107,12 +107,6 @@
         color: var(--color-card-details);
     }
 
-    .stream-delete {
-/*         display: flex; */
-/*         padding-top: 1rem; */
-/*         color: #800020; */
-    }
-
     .stream-delete button {
         height: 100%;
         width: 100%;
@@ -140,6 +134,7 @@
         width: 1rem;
         cursor: pointer;
         margin: auto;
+        border-radius: 4px;
     }
 
     input[type=checkbox]:hover {
@@ -159,6 +154,7 @@
         width: 0.5rem;
         top: 0.25rem;
         left: 0.25rem;
+        border-radius: 2px;
     }
 
     input[type=checkbox]:checked::before {
