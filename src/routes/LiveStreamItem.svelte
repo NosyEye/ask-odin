@@ -81,7 +81,7 @@
 
     .stream-selector {
         display: flex;
-        padding: 0.5rem;
+        padding-right: 0.2rem;
     }
 
     input[type=checkbox] {
@@ -120,6 +120,7 @@
         color: var(--color-card-name);
         border: none;
         border-radius: 4px;
+        cursor: pointer;
     }
 
     .stream-delete button:hover {
@@ -128,6 +129,41 @@
 
     .stream-delete button:active {
         background-color: var(--color-card-button-hover);
+    }
+
+    input[type=checkbox] {
+        appearance: none;
+        position: relative;
+        display: block;
+        background-color: var(--color-bar-bg);
+        height: 1rem;
+        width: 1rem;
+        cursor: pointer;
+        margin: auto;
+    }
+
+    input[type=checkbox]:hover {
+        background-color: var(--color-bar-button-hover);
+    }
+
+    input[type=checkbox]:checked {
+        background-color: var(--color-bar-button-hover);
+    }
+
+    input[type=checkbox]::before {
+        content: '';
+        position: absolute;
+        display: none;
+        background-color: var(--color-card-name);
+        height: 0.5rem;
+        width: 0.5rem;
+        top: 0.25rem;
+        left: 0.25rem;
+    }
+
+    input[type=checkbox]:checked::before {
+        display: block;
+
     }
 
     @media (max-width:480px) {
