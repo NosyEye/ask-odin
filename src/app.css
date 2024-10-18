@@ -7,14 +7,14 @@
 	--column-margin-top: 4rem;
 	font-family: var(--font-body);
 	--color-bg: #000;
-	--color-card-bg: #222;
+	--color-card-bg: #102;
 	--color-card-border: #AAA;
-	--color-card-name: #AAA;
-	--color-card-details: #999;
-	--color-bar-bg: #555;
-	--color-bar-text: #FFF;
-	--color-bar-button-hover: #111;
-	--color-bar-separator: #444;
+	--color-card-name: #EEE;
+	--color-card-details: #BBB;
+	--color-bar-bg: #213;
+	--color-bar-text: #EEE;
+	--color-bar-button-hover: #102;
+	--color-bar-separator: #AAA;
 	--color-about-text: #FFF;
 }
 
