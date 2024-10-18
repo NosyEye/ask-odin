@@ -41,11 +41,11 @@
 
 <style>
 	.raid-timer {
-		border-top: 2px solid #555;
+		border-top: 2px solid var(--color-bar-separator);
 		padding-top: 4px;
 		position: fixed;
-        background: #000;
-        color: #fff;
+        background-color: var(--color-bar-bg);
+        color: var(--color-bar-text);;
         top: 3em;
         width: 100%;
         height: 3em;
@@ -86,8 +86,8 @@
 		display: flex;
 		flex-direction: column;
 		position: fixed;
-        background: #000;
-        color: #fff;
+        background: var(--color-bar-bg);
+        color: var(--color-bar-text);;
 		bottom: 3em;
 		height: 20em;
 		justify-content: center;

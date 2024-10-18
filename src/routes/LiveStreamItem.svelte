@@ -22,27 +22,6 @@
 
 
 {#if stream}
-<!--<div class="stream-card">
-    <div class="stream-selector">
-        <input type="checkbox">
-    </div>
-    <div class="stream">
-        <div class="stream-info">
-            <div class="stream-name">
-                <a href={stream.link} target="_blank">{stream.name}</a>
-            </div>
-            <div class="stream-duration">
-                {stream.runningTime}
-            </div>
-            <div class="stream-viewers">
-                {stream.viewers}
-            </div>
-        </div>
-        <div class="stream-title">
-            {stream.title}
-        </div>
-    </div>
-</div>-->
 <div class="stream-card">
     <div class="stream-selector">
         <input type="checkbox" bind:checked={stream.selected}>
@@ -89,22 +68,18 @@
         text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
 
-/*    .offline-text {
-        position: relative;
-    }*/
-
     .stream-card {
         position: relative;
         width: 100%;
-        border: 1px solid black;
+        border: 1px solid var(--color-card-border);
         border-radius: 4px;
         padding: 4px;
         margin: 4px;
         display: grid;
+        background-color: var(--color-card-bg);
     }
 
     .stream-selector {
-/*         width: 2rem; */
         display: flex;
         padding: 0.5rem;
     }
@@ -113,44 +88,23 @@
         transform: scale(2);
     }
 
-    .stream {
-        width: 100%;
-    }
-
-    .stream-info {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .stream-name {
-/*         display: inline-block; */
+    .stream-name a {
         font-size: 1.2rem;
+        color: var(--color-card-name);
     }
 
     .stream-duration {
-/*         display: inline-block; */
+        color: var(--color-card-details);
     }
 
     .stream-viewers {
-/*         display: inline-block; */
+        color: var(--color-card-details);
     }
 
     .stream-title {
-/*     display:flex; */
         font-size: 0.8rem;
-/*         text-wrap: nowrap; */
-
         overflow: hidden;
-/*        width: 100%;
-  min-height: 0;
-  min-width: 0;*/
-    }
-
-    .stream-title-content {
-/*      min-height: 0;
-  min-width: 0;
-  word-break: normal;
-        overflow: hidden;*/
+        color: var(--color-card-details);
     }
 
     .stream-delete {
@@ -257,65 +211,4 @@
             grid-row-end: bottom;
         }
 	}
-
-/*	@media (min-width:481px) and (max-width:768px) {
-		.raid-timer input {
-			width:420px;
-		}
-	}
-
-	@media (min-width:769px) {
-		.raid-timer input {
-			width:600px;
-		}
-	}*/
-
-
-/*    .stream-card {
-        width: 100%;
-        border: 1px solid black;
-        border-radius: 4px;
-        padding: 4px;
-        margin: 4px;
-        display: flex;
-    }
-
-    .stream-selector {
-        width: 2rem;
-        display: flex;
-        padding: 0.5rem;
-    }
-
-    input[type=checkbox] {
-        transform: scale(2);
-    }
-
-    .stream {
-        width: 100%;
-    }
-
-    .stream-info {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .stream-name {
-        display: inline-block;
-        font-size: 1.2rem;
-    }
-
-    .stream-duration {
-        display: inline-block;
-    }
-
-    .stream-viewers {
-        display: inline-block;
-    }
-
-    .stream-title {
-    display:flex;
-        font-size: 0.8rem;
-        text-wrap: nowrap;
-        overflow: hidden;
-    }*/
 </style>

@@ -55,13 +55,13 @@
 	button {
 		width: 100%;
 		height: 100%;
-		background-color: var(--color-nav);
-		color: #fff;
+		background-color: var(--color-bar-bg);
+		color: var(--color-bar-text);;
 		border: none;
 		cursor: pointer;
 	}
 
 	button:hover {
-		background-color: var(--color-nav-hover);
+		background-color: var(--color-bar-button-hover);
 	}
 </style>

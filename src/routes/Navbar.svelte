@@ -38,8 +38,8 @@
 		position: fixed;
 		bottom: 0;
 		width: 100%;
-		background-color: #000;
-		color: #fff;
+		background-color: var(--color-bar-bg);
+		color: var(--color-bar-text);;
 		display: flex;
 		justify-content: center;
 		height: 3em;
@@ -80,11 +80,11 @@
 	}
 
 	button:hover {
-		background: var(--color-nav-hover);
+		background: var(--color-bar-button-hover);
 	}
 
 	button:active {
-		background: var(--color-nav-hover);
+		background: var(--color-bar-button-hover);
 	}
 
 </style>
