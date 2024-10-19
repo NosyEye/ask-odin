@@ -1,5 +1,4 @@
 <script lang="ts">
-	// import Header from './Header.svelte';
 	import '../app.css';
 	import Topbar from './Topbar.svelte';
 	import Navbar from './Navbar.svelte';

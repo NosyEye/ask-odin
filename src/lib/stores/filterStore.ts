@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { getStorageItem, setStorageItem, removeStorageItem } from '$lib/stores/storage';
+import { getStorageItem, setStorageItem } from '$lib/stores/storage';
 import { browser } from '$app/environment';
 import { Filter } from '$lib/types/filter';
 

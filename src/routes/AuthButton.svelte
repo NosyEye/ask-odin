@@ -1,22 +1,8 @@
 <script lang="ts">
-	import { requestTwitchAuth, logout } from '$lib/auth';
-    import { get } from 'svelte/store';
+	import { requestTwitchAuth } from '$lib/auth';
     import { loggedInStore } from '$lib/stores/authStore';
 
-	// let loggedIn = get(loggedInStore);
-	// loggedInStore.subscribe((status) => {
- //        loggedIn = status;
-	// });
-
 </script>
-
-<!--{#if $loggedInStore}
-<button on:click={logout}>
-Log out
-</button>
-{/if}-->
-
-
 {#if !$loggedInStore}
 <button on:click={requestTwitchAuth}>
 Log in with Twitch

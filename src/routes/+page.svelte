@@ -1,11 +1,9 @@
 <script lang='ts'>
 	import { getStreams } from '$lib/twitch-service';
-	import { streamsStore, streamsTimestampStore } from '$lib/stores/streamsStore';
+	import { streamsStore } from '$lib/stores/streamsStore';
 
 	import LiveStreamItem from './LiveStreamItem.svelte';
 	import { loggedInStore } from '$lib/stores/authStore';
-	import { onMount } from 'svelte';
-
 
 </script>
 
@@ -16,9 +14,6 @@
 
 <section>
 		{#if $loggedInStore && $streamsStore.length > 0}
-<!--			{#if $streamsTimestampStore}
-				Time of last get: {$streamsTimestampStore.toLocaleString()}
-			{/if}-->
 			{#each $streamsStore as stream}
 				{#if !stream.filteredOut && !stream.deleted}
 					<LiveStreamItem bind:stream={stream}/>
