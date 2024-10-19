@@ -34,6 +34,8 @@
 			</ul>
 			Filters are remembered by the browser across visits.
 		</dd>
+		<dt>Select streams</dt>
+		<dd>Select streams for copy by clicking the boxes to the left of their names</dd>
 		<dt><RefreshCcwIcon/> Reset</dt>
 		<dd>Reset the list by refreshing it, clearing any selections, and restoring removed streams (but filters are kept).</dd>
 		<dt><CopyIcon/> Copy </dt>
