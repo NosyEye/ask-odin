@@ -3,7 +3,7 @@
 	<meta name="description" content="About" />
 </svelte:head>
 
-<div class="text-column">
+<div class="about-text">
 	<h1>What is?</h1>
 
 	<p>
@@ -19,3 +19,29 @@
 	</p>
 
 </div>
+
+
+<style>
+h1,
+h2,
+p {
+	font-weight: 400;
+}
+p {
+	line-height: 1.5;
+}
+	h1 {
+		font-size: 2rem;
+		text-align: center;
+	}
+	.about-text {
+		display: flex;
+		max-width: 48rem;
+		flex: 0.6;
+		flex-direction: column;
+		justify-content: center;
+		margin: 0 auto;
+		color: var(--color-about-text);
+	}
+
+</style>

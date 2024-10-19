@@ -1,19 +1,29 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte';
 
-    const dispatch = createEventDispatcher();
-
+    let dialog;
 	export let dialogText: string;
 
 	export let buttonText: string;
 
 	export let timeSeconds: number;
 
+    onMount(() => {
+		window.document.addEventListener('reauthenticate', () => {
+			currentTime = timeSeconds;
+			timerText = `${timeSeconds} seconds`;
+			startTimer();
+		});
+	});
+
+    const dispatch = createEventDispatcher();
+
 	let timerText = `${timeSeconds} seconds`;
 
 	let currentTime = timeSeconds;
 	let timer;
 	function startTimer() {
+		dialog.showModal();
 		timer = setInterval(() => {
 			currentTime -= 1;
 			timerText = `${currentTime} seconds`;
@@ -31,17 +41,11 @@
 
 	function close() {
 		clearInterval(timer);
-		dispatch('close');
+		dialog.close();
 	}
-
-	onMount(() => {
-		currentTime = timeSeconds;
-		timerText = `${timeSeconds} seconds`;
-		startTimer();
-	});
 </script>
 
-<dialog open>
+<dialog bind:this={dialog}>
 {dialogText}
 <br>
 {timerText}
@@ -56,13 +60,18 @@
 	dialog {
 		position: fixed;
 
-		padding: 30px;
+		padding: 32px 32px 16px;
 
-		background-color: #000;
-		color: #FFF;
+		background-color: var(--color-bar-bg);
+		color: var(--color-bar-text);
 
 		text-align: center;
 		font-size: 1.2em;
+	}
+
+	dialog::backdrop {
+		background: rgba(0,0,0,0.5);
+		backdrop-filter: blur(4px);
 	}
 
 	.dialog-buttons {
@@ -72,7 +81,20 @@
 	}
 
 	button {
-		width: 5em;
+		width: 5rem;
+		height: 3rem;
 		text-align: center;
+		background-color: var(--color-bar-bg);
+		color: var(--color-bar-text);
+		border: none;
+		border-radius: 2px;
+	}
+
+	button:hover {
+		background-color: var(--color-bar-button-hover);
+	}
+
+	button:active{
+		background-color: var(--color-bar-button-hover);
 	}
 </style>

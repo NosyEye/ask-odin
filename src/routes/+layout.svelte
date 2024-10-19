@@ -9,6 +9,7 @@
 	import { getStreams } from '$lib/twitch-service';
 
 	import TimedAlertDialog from './TimedAlertDialog.svelte';
+    import ConfirmationDialog from './ConfirmationDialog.svelte';
 
 	let dialogText: string = 'Twitch login expired. Re-authenticating in';
 	let dialogButtonText: string = 'Abort';
@@ -28,9 +29,6 @@
 	let loading = true;
 	const streamsRefreshInterval = 1000 * 60;
 	onMount(async () => {
-		window.document.addEventListener('reauthenticate', () => {
-			startTimer();
-		});
 		await processTwitchAuth();
 		await getStreams();
 		loading = false;
@@ -38,6 +36,7 @@
 	});
 
 
+    let deleteDialogText = 'Remove channel from list?';
 </script>
 
 <div class="app">
@@ -48,12 +47,9 @@
 	{:else}
 		<slot />
 	{/if}
-
-	{#if showTimer}
-		<TimedAlertDialog on:close={closeTimer} on:timeExpired={authenticate} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
-	{/if}
 	</main>
-
+	<TimedAlertDialog on:timeExpired={authenticate} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
+	<ConfirmationDialog dialogText={deleteDialogText}/>
 	<Filters/>
 	<Navbar/>
 </div>

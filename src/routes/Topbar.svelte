@@ -41,11 +41,11 @@
 		position: fixed;
 		top: 0;
 		width: 100%;
-		background-color: #000;
-		color: #fff;
+		background-color: var(--color-bar-bg);
+		color: var(--color-bar-text);
 		display: flex;
 		justify-content: space-between;
-		z-index: 1000;
+		z-index: 2000;
 	}
 
 	.corner {
@@ -76,7 +76,7 @@
 		height: 100%;
 		align-items: center;
 		padding: 0 0.5rem;
- 		color: #fff;
+ 		color: var(--color-bar-text);;
 		font-weight: 700;
 		font-size: 0.8rem;
 		text-transform: uppercase;
@@ -91,7 +91,6 @@
 	}
 
 	.title a {
-		text-decoration: none;
-		color: #fff;
+		color: var(--color-bar-text);;
 	}
 </style>

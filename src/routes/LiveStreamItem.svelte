@@ -1,48 +1,24 @@
 <script lang="ts">
     import type { LiveStream } from '$lib/types/livestream';
     import { Trash2Icon } from 'svelte-feather-icons';
-    import { createEventDispatcher } from 'svelte';
-
-    import ConfirmationDialog from './ConfirmationDialog.svelte';
-
+    import { confirmationDialogStore } from '$lib/stores/dialogStore';
     export let stream: LiveStream;
 
     let deleteDialogVisible = false;
     let deleteDialogText = 'Remove channel from list?';
 
     function showDeleteDialog() {
-        deleteDialogVisible = true;
+        $confirmationDialogStore = {
+            showDialog: true,
+            confirmCallback: () => {
+                    stream.deleted = true;
+                }
+        };
     }
-
-    function onDeleteConfirm() {
-        stream.deleted = true;
-    }
-
 </script>
 
 
 {#if stream}
-<!--<div class="stream-card">
-    <div class="stream-selector">
-        <input type="checkbox">
-    </div>
-    <div class="stream">
-        <div class="stream-info">
-            <div class="stream-name">
-                <a href={stream.link} target="_blank">{stream.name}</a>
-            </div>
-            <div class="stream-duration">
-                {stream.runningTime}
-            </div>
-            <div class="stream-viewers">
-                {stream.viewers}
-            </div>
-        </div>
-        <div class="stream-title">
-            {stream.title}
-        </div>
-    </div>
-</div>-->
 <div class="stream-card">
     <div class="stream-selector">
         <input type="checkbox" bind:checked={stream.selected}>
@@ -72,9 +48,6 @@
 </div>
 {/if}
 
-<ConfirmationDialog bind:showDialog={deleteDialogVisible} on:confirm={onDeleteConfirm} bind:dialogText={deleteDialogText}/>
-
-
 <style>
     .offline-overlay {
         position: absolute;
@@ -89,76 +62,102 @@
         text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
 
-/*    .offline-text {
-        position: relative;
-    }*/
-
     .stream-card {
         position: relative;
         width: 100%;
-        border: 1px solid black;
+        border: 1px solid var(--color-card-border);
         border-radius: 4px;
         padding: 4px;
         margin: 4px;
         display: grid;
+        background-color: var(--color-card-bg);
     }
 
     .stream-selector {
-/*         width: 2rem; */
         display: flex;
-        padding: 0.5rem;
+        padding-right: 0.2rem;
     }
 
     input[type=checkbox] {
         transform: scale(2);
     }
 
-    .stream {
-        width: 100%;
-    }
-
-    .stream-info {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .stream-name {
-/*         display: inline-block; */
+    .stream-name a {
         font-size: 1.2rem;
+        font-weight: 1000;
+        color: var(--color-card-name);
     }
 
     .stream-duration {
-/*         display: inline-block; */
+        font-weight: 600;
+        color: var(--color-card-details);
     }
 
     .stream-viewers {
-/*         display: inline-block; */
+        font-weight: 600;
+        color: var(--color-card-details);
     }
 
     .stream-title {
-/*     display:flex; */
         font-size: 0.8rem;
-/*         text-wrap: nowrap; */
-
         overflow: hidden;
-/*        width: 100%;
-  min-height: 0;
-  min-width: 0;*/
+        color: var(--color-card-details);
     }
 
-    .stream-title-content {
-/*      min-height: 0;
-  min-width: 0;
-  word-break: normal;
-        overflow: hidden;*/
+    .stream-delete button {
+        height: 100%;
+        width: 100%;
+        background-color: inherit;
+        color: var(--color-card-name);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
-    .stream-delete {
-        display: flex;
-        padding-top: 1rem;
-        color: #800020;
+    .stream-delete button:hover {
+        background-color: var(--color-card-button-hover);
     }
 
+    .stream-delete button:active {
+        background-color: var(--color-card-button-hover);
+    }
+
+    input[type=checkbox] {
+        appearance: none;
+        position: relative;
+        display: block;
+        background-color: var(--color-bar-bg);
+        height: 1rem;
+        width: 1rem;
+        cursor: pointer;
+        margin: auto;
+        border-radius: 4px;
+    }
+
+    input[type=checkbox]:hover {
+        background-color: var(--color-bar-button-hover);
+    }
+
+    input[type=checkbox]:checked {
+        background-color: var(--color-bar-button-hover);
+    }
+
+    input[type=checkbox]::before {
+        content: '';
+        position: absolute;
+        display: none;
+        background-color: var(--color-card-name);
+        height: 0.5rem;
+        width: 0.5rem;
+        top: 0.25rem;
+        left: 0.25rem;
+        border-radius: 2px;
+    }
+
+    input[type=checkbox]:checked::before {
+        display: block;
+
+    }
 
     @media (max-width:480px) {
         .stream-card {
@@ -257,65 +256,4 @@
             grid-row-end: bottom;
         }
 	}
-
-/*	@media (min-width:481px) and (max-width:768px) {
-		.raid-timer input {
-			width:420px;
-		}
-	}
-
-	@media (min-width:769px) {
-		.raid-timer input {
-			width:600px;
-		}
-	}*/
-
-
-/*    .stream-card {
-        width: 100%;
-        border: 1px solid black;
-        border-radius: 4px;
-        padding: 4px;
-        margin: 4px;
-        display: flex;
-    }
-
-    .stream-selector {
-        width: 2rem;
-        display: flex;
-        padding: 0.5rem;
-    }
-
-    input[type=checkbox] {
-        transform: scale(2);
-    }
-
-    .stream {
-        width: 100%;
-    }
-
-    .stream-info {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .stream-name {
-        display: inline-block;
-        font-size: 1.2rem;
-    }
-
-    .stream-duration {
-        display: inline-block;
-    }
-
-    .stream-viewers {
-        display: inline-block;
-    }
-
-    .stream-title {
-    display:flex;
-        font-size: 0.8rem;
-        text-wrap: nowrap;
-        overflow: hidden;
-    }*/
 </style>

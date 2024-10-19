@@ -29,23 +29,29 @@
 
 {#if $showFiltersStore}
 <div class="filters-box">
-		<button class="close-button" on:click={closeFilters}><XIcon/></button>
+	<button class="close-button" on:click={closeFilters}><XIcon/></button>
+	<div class="filter">
 		<label>Max minutes streamed<br><input type="range" min="0" max="300" step="20" bind:value={$filterStore.maxMinutesStreamed}></label>
-		{maxMinutes}
+		<span class="filter-value">{maxMinutes}</span>
+	</div>
+	<div class="filter">
 		<label>Min viewers<br><input type="range" min="0" max="300" step="10" bind:value={$filterStore.minViewers}></label>
-		{$filterStore.minViewers}
+		<span class="filter-value">{$filterStore.minViewers}</span>
+	</div>
+	<div class="filter">
 		<label>Max viewers<br><input type="range" min="0" max="3000" step="100" bind:value={$filterStore.maxViewers}></label>
-		{maxViewers}
+		<span class="filter-value">{maxViewers}</span>
+	</div>
 </div>
 {/if}
 
 <style>
 	.raid-timer {
-		border-top: 2px solid #555;
+		border-top: 2px solid var(--color-bar-separator);
 		padding-top: 4px;
 		position: fixed;
-        background: #000;
-        color: #fff;
+        background-color: var(--color-bar-bg);
+        color: var(--color-bar-text);;
         top: 3em;
         width: 100%;
         height: 3em;
@@ -86,8 +92,8 @@
 		display: flex;
 		flex-direction: column;
 		position: fixed;
-        background: #000;
-        color: #fff;
+        background: var(--color-bar-bg);
+        color: var(--color-bar-text);;
 		bottom: 3em;
 		height: 20em;
 		justify-content: center;
@@ -122,6 +128,24 @@
 		top: 0;
 		right: 0;
 		padding: 8px;
+	}
+
+	.filter {
+		width: 80%;
+		padding: 16px;
+		text-align: center;
+	}
+
+	label {
+		width:100%;
+	}
+
+	input {
+		width: 100%;
+	}
+
+	.filter-value {
+		font-weight: 1000;
 	}
 
 </style>

@@ -1,24 +1,38 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
+    import { confirmationDialogStore } from '$lib/stores/dialogStore';
 
-    const dispatch = createEventDispatcher();
+    let dialog;
 
 	export let dialogText: string;
 
-	export let showDialog: boolean;
+	function handleDialogChanges() {
+		if (dialog) {
+			if ($confirmationDialogStore.showDialog) {
+				dialog.showModal();
+			} else {
+				dialog.close();
+			}
+		}
+	}
 
 	function closeDialog() {
-		showDialog = false;
+		$confirmationDialogStore = {
+			showDialog: false,
+			confirmCallback: null
+		}
 	}
 
 	function confirm() {
-		showDialog = false;
-		dispatch('confirm');
+		$confirmationDialogStore.confirmCallback();
+		closeDialog();
+	}
+
+	$: {
+		if ($confirmationDialogStore) handleDialogChanges();
 	}
 </script>
 
-{#if showDialog}
-<dialog open>
+<dialog bind:this={dialog}>
 {dialogText}
 <br>
 <div class="dialog-buttons">
@@ -26,22 +40,24 @@
 	<button on:click={closeDialog}>No</button>
 </div>
 </dialog>
-{/if}
 
 <style>
 
 	dialog {
 		position: fixed;
 
-		top: 10em;
+		padding: 32px 32px 16px;
 
-		padding: 30px;
-
-		background-color: #000;
-		color: #FFF;
+		background-color: var(--color-bar-bg);
+		color: var(--color-bar-text);
 
 		text-align: center;
 		font-size: 1.2em;
+	}
+
+	dialog::backdrop {
+		background: rgba(0,0,0,0.5);
+		backdrop-filter: blur(4px);
 	}
 
 	.dialog-buttons {
@@ -51,7 +67,20 @@
 	}
 
 	button {
-		width: 3em;
+		width: 5rem;
+		height: 3rem;
 		text-align: center;
+		background-color: var(--color-bar-bg);
+		color: var(--color-bar-text);
+		border: none;
+		border-radius: 2px;
+	}
+
+	button:hover {
+		background-color: var(--color-bar-button-hover);
+	}
+
+	button:active{
+		background-color: var(--color-bar-button-hover);
 	}
 </style>
