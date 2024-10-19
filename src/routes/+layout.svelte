@@ -9,6 +9,7 @@
 	import { getStreams } from '$lib/twitch-service';
 
 	import TimedAlertDialog from './TimedAlertDialog.svelte';
+    import ConfirmationDialog from './ConfirmationDialog.svelte';
 
 	let dialogText: string = 'Twitch login expired. Re-authenticating in';
 	let dialogButtonText: string = 'Abort';
@@ -38,6 +39,7 @@
 	});
 
 
+    let deleteDialogText = 'Remove channel from list?';
 </script>
 
 <div class="app">
@@ -53,7 +55,7 @@
 		<TimedAlertDialog on:close={closeTimer} on:timeExpired={authenticate} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
 	{/if}
 	</main>
-
+	<ConfirmationDialog dialogText={deleteDialogText}/>
 	<Filters/>
 	<Navbar/>
 </div>
