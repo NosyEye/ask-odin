@@ -2,6 +2,7 @@
 A tool for finding Twitch raid targets based on your followed channels.
 
 I made this because it would be useful to me, and potentially others. Also, I wanted to try Svelte. It's pretty good.
+Some lazy coding here and there, but hey, it works.
 
 ## Twitch API
 
