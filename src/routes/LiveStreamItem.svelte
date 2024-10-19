@@ -84,14 +84,17 @@
 
     .stream-name a {
         font-size: 1.2rem;
+        font-weight: 1000;
         color: var(--color-card-name);
     }
 
     .stream-duration {
+        font-weight: 600;
         color: var(--color-card-details);
     }
 
     .stream-viewers {
+        font-weight: 600;
         color: var(--color-card-details);
     }
 
