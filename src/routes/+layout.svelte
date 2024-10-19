@@ -6,9 +6,6 @@
 	import { onMount } from 'svelte';
 	import { processTwitchAuth, requestTwitchAuth } from '$lib/auth';
 	import { getStreams } from '$lib/twitch-service';
-	import { page } from '$app/stores';
-	import { dev } from '$app/environment';
-	import { goto } from '$app/navigation';
 
 	import TimedAlertDialog from './TimedAlertDialog.svelte';
     import ConfirmationDialog from './ConfirmationDialog.svelte';
@@ -31,14 +28,6 @@
 	let loading = true;
 	const streamsRefreshInterval = 1000 * 60;
 	onMount(async () => {
-		if ($page.route.id === '/about') {
-			if (dev) {
-				goto('/about');
-			}
-			else {
-				goto('/ask-odin/about');
-			}
-		}
 		await processTwitchAuth();
 		await getStreams();
 		loading = false;
