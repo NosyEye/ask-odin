@@ -101,6 +101,7 @@
 		height: 24em;
 		justify-content: center;
 		align-items: center;
+		z-index: 20;
     }
 
     @media (max-width:480px) {
