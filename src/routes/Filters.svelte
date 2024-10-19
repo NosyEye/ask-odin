@@ -29,13 +29,19 @@
 
 {#if $showFiltersStore}
 <div class="filters-box">
-		<button class="close-button" on:click={closeFilters}><XIcon/></button>
+	<button class="close-button" on:click={closeFilters}><XIcon/></button>
+	<div class="filter">
 		<label>Max minutes streamed<br><input type="range" min="0" max="300" step="20" bind:value={$filterStore.maxMinutesStreamed}></label>
-		{maxMinutes}
+		<span class="filter-value">{maxMinutes}</span>
+	</div>
+	<div class="filter">
 		<label>Min viewers<br><input type="range" min="0" max="300" step="10" bind:value={$filterStore.minViewers}></label>
-		{$filterStore.minViewers}
+		<span class="filter-value">{$filterStore.minViewers}</span>
+	</div>
+	<div class="filter">
 		<label>Max viewers<br><input type="range" min="0" max="3000" step="100" bind:value={$filterStore.maxViewers}></label>
-		{maxViewers}
+		<span class="filter-value">{maxViewers}</span>
+	</div>
 </div>
 {/if}
 
@@ -122,6 +128,24 @@
 		top: 0;
 		right: 0;
 		padding: 8px;
+	}
+
+	.filter {
+		width: 80%;
+		padding: 16px;
+		text-align: center;
+	}
+
+	label {
+		width:100%;
+	}
+
+	input {
+		width: 100%;
+	}
+
+	.filter-value {
+		font-weight: 1000;
 	}
 
 </style>
