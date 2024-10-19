@@ -68,25 +68,25 @@
 	}
 
 	@media (max-width:360px) {
-		.raid-timer input {
+		.raid-timer input[type="range"] {
 			width:240px;
 		}
 	}
 
     @media (min-width:361px) and (max-width:480px) {
-		.raid-timer input {
+		.raid-timer input[type="range"] {
 			width:320px;
 		}
 	}
 
 	@media (min-width:481px) and (max-width:768px) {
-		.raid-timer input {
+		.raid-timer input[type="range"] {
 			width:420px;
 		}
 	}
 
 	@media (min-width:769px) {
-		.raid-timer input {
+		.raid-timer input[type="range"] {
 			width:600px;
 		}
 	}
