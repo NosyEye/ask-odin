@@ -44,22 +44,54 @@
 		background-color: var(--color-bar-bg);
 		color: var(--color-bar-text);
 		display: flex;
-		justify-content: space-between;
 		z-index: 2000;
 	}
 
+	@media (min-width: 601px) {
+		.topbar {
+			justify-content: space-between;
+		}
+
+		.left-corner {
+			width: 3em;
+			padding-right: 5em;
+		}
+
+
+		.title {
+			position: absolute;
+			width: 20%;
+			margin-left: 40%;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.left-corner {
+			width: 3em;
+		}
+
+
+		.title {
+			position: absolute;
+			width: 30%;
+			margin-left: 10%;
+		}
+	}
+
+
 	.corner {
-		position: relative;
-		width: 8em;
+		position: absolute;
+		width: 14em;
 		height: 3em;
+		right: 0;
 	}
 
 	.left-corner {
 		position: relative;
-		width: 3em;
 		height: 3em;
-		padding-right: 5em;
 	}
+
+
 
 	.nav-icon {
 		position: relative;
@@ -88,6 +120,7 @@
 	.title {
 		height: 3em;
         line-height: 3.0em;
+        text-align: center;
 	}
 
 	.title a {
