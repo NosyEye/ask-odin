@@ -46,7 +46,6 @@
 	dialog {
 		position: fixed;
 
-
 		padding: 32px 32px 16px;
 
 		background-color: var(--color-bar-bg);
