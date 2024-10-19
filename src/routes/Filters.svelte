@@ -31,15 +31,18 @@
 <div class="filters-box">
 	<button class="close-button" on:click={closeFilters}><XIcon/></button>
 	<div class="filter">
+		<label>Category<br><input type="text" bind:value={$filterStore.category}></label>
+	</div>
+	<div class="filter">
 		<label>Max minutes streamed<br><input type="range" min="0" max="300" step="20" bind:value={$filterStore.maxMinutesStreamed}></label>
 		<span class="filter-value">{maxMinutes}</span>
 	</div>
 	<div class="filter">
-		<label>Min viewers<br><input type="range" min="0" max="300" step="10" bind:value={$filterStore.minViewers}></label>
+		<label>Min viewers<br><input type="range" min="0" max="300" step="1" bind:value={$filterStore.minViewers}></label>
 		<span class="filter-value">{$filterStore.minViewers}</span>
 	</div>
 	<div class="filter">
-		<label>Max viewers<br><input type="range" min="0" max="3000" step="100" bind:value={$filterStore.maxViewers}></label>
+		<label>Max viewers<br><input type="range" min="0" max="3000" step="10" bind:value={$filterStore.maxViewers}></label>
 		<span class="filter-value">{maxViewers}</span>
 	</div>
 </div>
@@ -95,7 +98,7 @@
         background: var(--color-bar-bg);
         color: var(--color-bar-text);;
 		bottom: 3em;
-		height: 20em;
+		height: 24em;
 		justify-content: center;
 		align-items: center;
     }
@@ -140,7 +143,7 @@
 		width:100%;
 	}
 
-	input {
+	input[type="range"] {
 		width: 100%;
 	}
 
