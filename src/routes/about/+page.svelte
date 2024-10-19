@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { SlidersIcon, RefreshCcwIcon, CopyIcon, Trash2Icon } from 'svelte-feather-icons';
+
+	$: $page;
 </script>
 
 <svelte:head>
