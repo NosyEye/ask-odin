@@ -33,9 +33,8 @@
                 {stream.viewers}
             </div>
         <div class="stream-title">
-            <div class="stream-title-content">
+            <b>{stream.category}</b>:
             {stream.title}
-            </div>
         </div>
         <div class="stream-delete">
             <button on:click={showDeleteDialog}><Trash2Icon/></button>

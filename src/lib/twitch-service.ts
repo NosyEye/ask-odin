@@ -136,7 +136,7 @@ export function filterStreams(streams: any[], filter: Filter) {
         stream.adjustedRunningTime = stream.runningTime + filter.minutesToRaid * 60 * 1000;
         stream.adjustedRunningTimeString = durationToString(stream.adjustedRunningTime);
 
-        if (stream.category !== filter.category) {
+        if (filter.category && filter.category !== '' && !stream.category.toLowerCase().includes(filter.category.toLowerCase())) {
             stream.filteredOut = true;
             continue;
         }
