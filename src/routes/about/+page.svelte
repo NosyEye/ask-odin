@@ -18,7 +18,7 @@
 
 	<h2>Usage</h2>
 	<p>
-		To use, log in with your Twitch account. The app will fetch a list containing live streams on from your followed channels. It refreshes automatically every minute.
+		To use, log in with your Twitch account. The app will fetch a list containing live streams from your followed channels. It refreshes automatically every minute.
 	</p>
 	<dl>
 		<dt>Raid timer up top</dt>
