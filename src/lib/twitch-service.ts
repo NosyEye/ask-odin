@@ -69,7 +69,7 @@ export async function getStreams() {
                 deleted: currentStream ? currentStream.deleted : false,
                 filteredOut: currentStream ? currentStream.filteredOut : false,
                 offline: false,
-                note: currentStream.note
+                note: currentStream ? currentStream.note : ''
             });
         }
 
