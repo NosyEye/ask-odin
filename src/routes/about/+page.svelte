@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SlidersIcon, RefreshCcwIcon, CopyIcon, Trash2Icon } from 'svelte-feather-icons';
+	import { SlidersIcon, RefreshCcwIcon, CopyIcon, Trash2Icon, EditIcon } from 'svelte-feather-icons';
 </script>
 
 <svelte:head>
@@ -37,9 +37,11 @@
 		<dt>Select streams</dt>
 		<dd>Select streams for copy by clicking the boxes to the left of their names</dd>
 		<dt><RefreshCcwIcon/> Reset</dt>
-		<dd>Reset the list by refreshing it, clearing any selections, and restoring removed streams (but filters are kept).</dd>
+		<dd>Reset the list by refreshing it, clearing any selections and notes, and restoring removed streams (but filters are kept).</dd>
 		<dt><CopyIcon/> Copy </dt>
 		<dd>Copy the visible, selected streams in a markdown codeblock (useful for sharing in Discord). Includes stream duration and viewer count.</dd>
+		<dt><EditIcon/> Note </dt>
+		<dd>Add a note for the stream. This will be included in the copied list.</dd>
 		<dt><Trash2Icon/> Delete </dt>
 		<dd>Remove the stream from the list.</dd>
 	</dl>
