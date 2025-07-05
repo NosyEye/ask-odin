@@ -9,6 +9,7 @@
 
 	import TimedAlertDialog from './TimedAlertDialog.svelte';
     import ConfirmationDialog from './ConfirmationDialog.svelte';
+    import NoteDialog from './NoteDialog.svelte';
 
 	let dialogText: string = 'Twitch login expired. Re-authenticating in';
 	let dialogButtonText: string = 'Abort';
@@ -36,6 +37,7 @@
 
 
     let deleteDialogText = 'Remove channel from list?';
+    let noteDialogText = 'Enter stream note';
 </script>
 
 <div class="app">
@@ -49,6 +51,7 @@
 	</main>
 	<TimedAlertDialog on:timeExpired={authenticate} bind:dialogText={dialogText} bind:timeSeconds={timerSeconds} bind:buttonText={dialogButtonText}/>
 	<ConfirmationDialog dialogText={deleteDialogText}/>
+	<NoteDialog dialogText={noteDialogText}/>
 	<Filters/>
 	<Navbar/>
 </div>

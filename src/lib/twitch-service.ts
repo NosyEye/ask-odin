@@ -68,7 +68,8 @@ export async function getStreams() {
                 selected: currentStream ? currentStream.selected : false,
                 deleted: currentStream ? currentStream.deleted : false,
                 filteredOut: currentStream ? currentStream.filteredOut : false,
-                offline: false
+                offline: false,
+                note: currentStream.note
             });
         }
 
@@ -120,7 +121,8 @@ export async function getStreamsAndReset() {
                 selected: false,
                 deleted: false,
                 filteredOut: false,
-                offline: false
+                offline: false,
+                note: ''
             });
         }
         filterStreams(streams, get(filterStore));
@@ -167,8 +169,18 @@ function toDiscordFormat() {
     let discordText = '```\n';
     const streams = get(streamsStore);
     const selectedStreams = streams.filter(s => s.selected && !s.deleted && !s.filteredOut);
+
+    let mostViewers = 0;
+    for (const stream of selectedStreams) {
+        if (stream.viewers > mostViewers) {
+            mostViewers = stream.viewers;
+        }
+    }
+    let mostViewerDigits = mostViewers.toString().length;
+
     for (const [index,stream] of selectedStreams.entries()) {
-        discordText += stream.name.padEnd(25, ' ') + stream.adjustedRunningTimeString + ' (' + stream.viewers + ')';
+        let viewCount = ' (' + stream.viewers + ')';
+        discordText += stream.name.padEnd(25, ' ') + stream.adjustedRunningTimeString + viewCount.padEnd(mostViewerDigits + 3, ' ') + (stream.note ? `  ${stream.note}` : '');
 
         if (index < selectedStreams.length - 1) {
             discordText += '\n\n';

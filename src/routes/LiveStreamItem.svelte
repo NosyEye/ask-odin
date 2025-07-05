@@ -1,17 +1,24 @@
 <script lang="ts">
     import type { LiveStream } from '$lib/types/livestream';
-    import { Trash2Icon } from 'svelte-feather-icons';
-    import { confirmationDialogStore } from '$lib/stores/dialogStore';
+    import { Trash2Icon, EditIcon } from 'svelte-feather-icons';
+    import { confirmationDialogStore, noteDialogStore } from '$lib/stores/dialogStore';
     export let stream: LiveStream;
-
-    let deleteDialogVisible = false;
-    let deleteDialogText = 'Remove channel from list?';
 
     function showDeleteDialog() {
         $confirmationDialogStore = {
             showDialog: true,
             confirmCallback: () => {
                     stream.deleted = true;
+                }
+        };
+    }
+
+    function showNoteDialog() {
+        $noteDialogStore = {
+            showDialog: true,
+            note: stream.note,
+            confirmCallback: (note) => {
+                    stream.note = note;
                 }
         };
     }
@@ -35,6 +42,9 @@
         <div class="stream-title">
             <b>{stream.category}</b>:
             {stream.title}
+        </div>
+        <div class="stream-note">
+            <button on:click={showNoteDialog}><EditIcon/></button>
         </div>
         <div class="stream-delete">
             <button on:click={showDeleteDialog}><Trash2Icon/></button>
@@ -103,7 +113,7 @@
         color: var(--color-card-details);
     }
 
-    .stream-delete button {
+    .stream-delete button, .stream-note button {
         height: 100%;
         width: 100%;
         background-color: inherit;
@@ -113,11 +123,11 @@
         cursor: pointer;
     }
 
-    .stream-delete button:hover {
+    .stream-delete button:hover, .stream-note button:hover {
         background-color: var(--color-card-button-hover);
     }
 
-    .stream-delete button:active {
+    .stream-delete button:active, .stream-note button:active {
         background-color: var(--color-card-button-hover);
     }
 
@@ -160,7 +170,7 @@
 
     @media (max-width:480px) {
         .stream-card {
-            grid-template-columns: [selector] 3rem [name] 4rem [viewers] auto [delete] 3rem [end];
+            grid-template-columns: [selector] 3rem [name] 4rem [viewers] auto [note] 3rem [delete] 3rem [end];
             grid-template-rows: [head] 2rem [details1] 1.5rem [details2] 2rem [bottom];
         }
 
@@ -173,7 +183,7 @@
 
         .stream-name {
             grid-column-start: name;
-            grid-column-end: delete;
+            grid-column-end: note;
             grid-row-start: head;
             grid-row-end: details1;
         }
@@ -187,15 +197,22 @@
 
         .stream-viewers {
             grid-column-start: viewers;
-            grid-column-end: delete;
+            grid-column-end: note;
             grid-row-start: details1;
             grid-row-end: details2;
         }
 
         .stream-title {
             grid-column-start: name;
-            grid-column-end: delete;
+            grid-column-end: note;
             grid-row-start: details2;
+            grid-row-end: bottom;
+        }
+
+        .stream-note {
+            grid-column-start: note;
+            grid-column-end: delete;
+            grid-row-start: head;
             grid-row-end: bottom;
         }
 
@@ -209,7 +226,7 @@
 
     @media (min-width:480px) {
         .stream-card {
-            grid-template-columns: [selector] 3rem [name] auto [duration] 4rem [viewers] 4rem [delete] 3rem [end];
+            grid-template-columns: [selector] 3rem [name] auto [duration] 4rem [viewers] 4rem [note] 3rem [delete] 3rem [end];
             grid-template-rows: [head] 2rem [title] 2rem [bottom];
         }
 
@@ -236,15 +253,22 @@
 
         .stream-viewers {
             grid-column-start: viewers;
-            grid-column-end: delete;
+            grid-column-end: note;
             grid-row-start: head;
             grid-row-end: title;
         }
 
         .stream-title {
             grid-column-start: name;
-            grid-column-end: delete;
+            grid-column-end: note;
             grid-row-start: title;
+            grid-row-end: bottom;
+        }
+
+        .stream-note {
+            grid-column-start: note;
+            grid-column-end: delete;
+            grid-row-start: head;
             grid-row-end: bottom;
         }
 

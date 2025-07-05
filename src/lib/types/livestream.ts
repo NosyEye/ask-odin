@@ -11,4 +11,5 @@ export interface LiveStream {
     deleted: boolean;
     filteredOut: boolean
     offline: boolean;
+    note: string;
 }
